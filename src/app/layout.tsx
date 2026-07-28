@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Figtree } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { ProtectImages } from "@/components/shared/ProtectImages";
 import { site } from "@/data/site";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -60,6 +61,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Analytics />
+        <ProtectImages />
         <Header />
         <main id="main" className="flex-1">
           {children}

@@ -41,7 +41,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={[
-            "mt-4 text-base leading-relaxed md:text-lg",
+            "mt-4 text-sm leading-relaxed md:text-base",
             light ? "text-cream/75" : "text-charcoal-muted",
           ].join(" ")}
         >
