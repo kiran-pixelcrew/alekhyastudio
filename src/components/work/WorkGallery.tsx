@@ -53,39 +53,65 @@ export function WorkGallery({ items }: WorkGalleryProps) {
         })}
       </div>
 
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        {filtered.map((item) => (
-          <li key={item.id}>
-            <article>
-              <div
-                className={[
-                  "img-zoom relative overflow-hidden",
-                  item.aspect === "landscape"
-                    ? "aspect-[4/3]"
-                    : item.aspect === "square"
-                      ? "aspect-square"
-                      : "aspect-[3/4]",
-                ].join(" ")}
-              >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover object-top"
-                  loading="lazy"
-                  unoptimized={item.src.startsWith("/images/")}
-                />
-              </div>
-              <div className="mt-3">
-                <h3 className="font-display text-xl text-charcoal">{item.title}</h3>
-                <p className="text-xs uppercase tracking-[0.16em] text-charcoal-muted">
-                  {workCategories.find((c) => c.id === item.category)?.label}
-                </p>
-              </div>
-            </article>
-          </li>
-        ))}
+      <ul
+        className={[
+          "grid gap-4",
+          filtered.length === 1
+            ? "grid-cols-1"
+            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2",
+        ].join(" ")}
+      >
+        {filtered.map((item) => {
+          const isInvitation = item.category === "invitations";
+
+          return (
+            <li
+              key={item.id}
+              className={
+                isInvitation ? "col-span-full mx-auto w-full max-w-5xl" : undefined
+              }
+            >
+              <article className={isInvitation ? "text-center" : undefined}>
+                <div
+                  className={[
+                    "img-zoom relative overflow-hidden",
+                    isInvitation
+                      ? "aspect-[32/15] bg-charcoal/5"
+                      : item.aspect === "landscape"
+                        ? "aspect-[4/3]"
+                        : item.aspect === "square"
+                          ? "aspect-square"
+                          : "aspect-[3/4]",
+                  ].join(" ")}
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes={
+                      isInvitation
+                        ? "(max-width: 1024px) 100vw, 1024px"
+                        : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    }
+                    className={
+                      isInvitation
+                        ? "object-contain"
+                        : "object-cover object-top"
+                    }
+                    loading="lazy"
+                    unoptimized={item.src.startsWith("/images/")}
+                  />
+                </div>
+                <div className="mt-3">
+                  <h3 className="font-display text-xl text-charcoal">{item.title}</h3>
+                  <p className="text-xs uppercase tracking-[0.16em] text-charcoal-muted">
+                    {workCategories.find((c) => c.id === item.category)?.label}
+                  </p>
+                </div>
+              </article>
+            </li>
+          );
+        })}
       </ul>
 
       <div className="mt-14 text-center">

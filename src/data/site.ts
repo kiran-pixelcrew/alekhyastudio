@@ -66,8 +66,8 @@ export const threeCrafts = {
 
 export const serviceNavLinks = [
   { href: "/photography", label: "Dance Photography" },
-  { href: "/invitations", label: "Invitations & Posters" },
   { href: "/websites", label: "Portfolio Websites" },
+  { href: "/invitations", label: "Invitations & Posters" },
 ] as const;
 
 export const navLinks = [
