@@ -2,7 +2,7 @@ import { site } from "@/data/site";
 
 export function WhatsAppFloat() {
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 md:bottom-8 md:right-8">
+    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-center gap-2.5 md:bottom-8 md:right-8">
       <a
         href={site.instagram}
         target="_blank"
