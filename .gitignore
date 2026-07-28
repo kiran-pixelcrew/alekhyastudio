@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Source gallery uploads (site uses converted WebPs in public/images/work)
+/public/images/gallery/

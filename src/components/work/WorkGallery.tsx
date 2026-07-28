@@ -9,6 +9,7 @@ import {
 } from "@/data/work";
 import { Button } from "@/components/shared/Button";
 import { getBentoImageClass, getFeaturedBentoClass } from "@/lib/bentoGrid";
+import { GalleryLightbox } from "@/components/work/GalleryLightbox";
 
 type WorkGalleryProps = {
   items: WorkItem[];
@@ -16,6 +17,7 @@ type WorkGalleryProps = {
 
 export function WorkGallery({ items }: WorkGalleryProps) {
   const [active, setActive] = useState<WorkCategory>("photography");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const useBento = active === "photography";
   const isInvitations = active === "invitations&creatives";
 
@@ -23,6 +25,8 @@ export function WorkGallery({ items }: WorkGalleryProps) {
     () => items.filter((item) => item.category === active),
     [active, items],
   );
+
+  const closeLightbox = () => setLightboxIndex(null);
 
   return (
     <div>
@@ -45,7 +49,10 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                   ? "bg-button text-cream-soft"
                   : "bg-cream-deep text-charcoal-muted hover:text-charcoal",
               ].join(" ")}
-              onClick={() => setActive(category.id)}
+              onClick={() => {
+                setActive(category.id);
+                setLightboxIndex(null);
+              }}
             >
               {category.label}
             </button>
@@ -64,6 +71,7 @@ export function WorkGallery({ items }: WorkGalleryProps) {
       >
         {filtered.map((item, index) => {
           const isInvitation = item.category === "invitations&creatives";
+          const canLightbox = !item.href;
           const spanClass = useBento
             ? getFeaturedBentoClass(index, filtered.length, item.aspect)
             : "";
@@ -85,38 +93,62 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                 .join(" ")}
             >
               <article className="group h-full">
-                <div
-                  className={[
-                    "img-zoom relative overflow-hidden",
-                    useBento ? "h-full" : undefined,
-                    imageClass,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes={
-                      isInvitation
-                        ? "(max-width: 1024px) 100vw, 1024px"
-                        : useBento
-                          ? spanClass.includes("featured") ||
-                            spanClass.includes("wide")
-                            ? "(max-width: 1024px) 100vw, 50vw"
-                            : "(max-width: 768px) 100vw, 25vw"
-                          : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    }
-                    className={
-                      isInvitation
-                        ? "object-contain"
-                        : "object-cover object-top"
-                    }
-                    loading="lazy"
-                    unoptimized={item.src.startsWith("/images/")}
-                  />
-                  {item.href ? (
+                {canLightbox ? (
+                  <button
+                    type="button"
+                    className={[
+                      "img-zoom relative block w-full overflow-hidden text-left",
+                      useBento ? "h-full" : undefined,
+                      imageClass,
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() => setLightboxIndex(index)}
+                    aria-label={`View ${item.title} fullscreen`}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes={
+                        isInvitation
+                          ? "(max-width: 1024px) 100vw, 1024px"
+                          : useBento
+                            ? spanClass.includes("featured") ||
+                              spanClass.includes("wide")
+                              ? "(max-width: 1024px) 100vw, 50vw"
+                              : "(max-width: 768px) 100vw, 25vw"
+                            : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      }
+                      className={
+                        isInvitation
+                          ? "object-contain"
+                          : "object-cover object-center"
+                      }
+                      loading="lazy"
+                      unoptimized={item.src.startsWith("/images/")}
+                    />
+                    <span className="pointer-events-none absolute inset-0 bg-charcoal/0 transition group-hover:bg-charcoal/15" />
+                  </button>
+                ) : (
+                  <div
+                    className={[
+                      "img-zoom relative overflow-hidden",
+                      useBento ? "h-full" : undefined,
+                      imageClass,
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-top"
+                      loading="lazy"
+                      unoptimized={item.src.startsWith("/images/")}
+                    />
                     <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-charcoal/70 via-transparent to-transparent pb-5 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
                       <a
                         href={item.href}
@@ -127,13 +159,22 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                         Visit Website
                       </a>
                     </div>
-                  ) : null}
-                </div>
+                  </div>
+                )}
               </article>
             </li>
           );
         })}
       </ul>
+
+      {lightboxIndex !== null ? (
+        <GalleryLightbox
+          items={filtered}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onChange={setLightboxIndex}
+        />
+      ) : null}
 
       <div className="mt-14 text-center">
         <Button href="/contact" variant="primary" size="lg">

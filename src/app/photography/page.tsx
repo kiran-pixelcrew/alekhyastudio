@@ -35,9 +35,9 @@ export default function PhotographyPage() {
       <section className="px-5 py-16 md:px-8 md:py-24">
         <FadeIn className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="What we shoot"
-            title="Performance, portraits, and sabha coverage"
-            description="We photograph Indian classical dance with the eye of someone who understands the art form — waiting for abhinaya, timing, and the moments that make a performance memorable."
+            eyebrow="What We Capture"
+            title="Every performance has a story. We preserve the moments that tell it."
+            description="We specialize in Indian classical dance photography, capturing the emotion, precision, and energy behind every performance. From expressive abhinaya to powerful nritta, we document the moments that matter most."
           />
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {service.highlights.map((item) => (
@@ -45,14 +45,19 @@ export default function PhotographyPage() {
                 key={item}
                 className="border border-charcoal/10 bg-cream-soft p-6"
               >
-                <h3 className="font-display text-xl text-charcoal">{item}</h3>
+                <h3 className="font-display text-xl text-charcoal md:text-2xl">
+                  {item}
+                </h3>
               </li>
             ))}
           </ul>
-          <p className="mt-10 max-w-2xl text-charcoal-muted leading-relaxed">
-            From arangetrams and recitals to studio portraits and concept
-            shoots, we capture your art with care and cultural fluency. Browse
-            our photography in{" "}
+          <p className="mt-10 max-w-3xl text-lg leading-relaxed text-charcoal-muted">
+            Whether it&apos;s an intimate solo recital, a grand arangetram, or a
+            thoughtfully crafted portrait session, every image is created with
+            an understanding of the art—not just the camera.
+          </p>
+          <p className="mt-6 max-w-2xl text-charcoal-muted leading-relaxed">
+            Browse our photography in{" "}
             <a
               href="/work"
               className="font-medium text-button underline-offset-4 hover:underline"

@@ -93,7 +93,7 @@ export function Hero({ slides }: HeroProps) {
             </div>
           );
         })}
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/92 via-charcoal/45 to-charcoal/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/92 via-charcoal/45o-charcoal/25" />
       </div>
 
       <div className="sr-only" aria-live="polite">
@@ -105,7 +105,7 @@ export function Hero({ slides }: HeroProps) {
           {heroContent.eyebrow}
         </p>
         <h1 className="max-w-7xl text-nowrap font-display text-5xl leading-[1.05] text-cream-soft font-semibold sm:text-6xl md:text-7xl lg:text-8xl">
-          You Dance. <p className="text-button-soft">We Make It Look Unforgettable.</p>
+        We understand your art <br /> <p className="text-button-soft">because we live it too.</p>
         </h1>
         <p className="mt-5 max-w-2xl text-base text-cream/80 md:text-lg">
           {heroContent.subheadline}

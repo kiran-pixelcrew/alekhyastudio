@@ -3,11 +3,7 @@ import { PageHero } from "@/components/shared/PageHero";
 import { Button } from "@/components/shared/Button";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  PricingTiers,
-  ProcessSteps,
-  TechStack,
-} from "@/components/web/WebSections";
+import { ProcessSteps } from "@/components/web/WebSections";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { getService } from "@/data/services";
 import { site } from "@/data/site";
@@ -77,28 +73,6 @@ export default function WebsitesPage() {
             </FadeIn>
             <div className="mt-12">
               <ProcessSteps />
-            </div>
-          </div>
-
-          <div>
-            <FadeIn>
-              <SectionHeading eyebrow="Stack" title="Modern, maintainable tools" />
-            </FadeIn>
-            <FadeIn className="mt-8">
-              <TechStack />
-            </FadeIn>
-          </div>
-
-          <div>
-            <FadeIn>
-              <SectionHeading
-                eyebrow="Investment"
-                title="Website packages"
-                description="Transparent starting points — every project is scoped to your art and audience."
-              />
-            </FadeIn>
-            <div className="mt-12">
-              <PricingTiers />
             </div>
           </div>
         </div>

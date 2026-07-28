@@ -17,16 +17,13 @@ export function getBentoItemClass({
     return "bento-span-full";
   }
 
-  if (index % 7 === 0) {
-    return "bento-span-featured";
-  }
-
   if (aspect === "landscape") {
-    return index % 3 === 1 ? "bento-span-featured" : "bento-span-wide";
+    // Wide stage frames need room; use featured so they match tall neighbor height.
+    return index % 3 === 0 ? "bento-span-featured" : "bento-span-wide";
   }
 
   if (aspect === "portrait") {
-    return "bento-span-tall";
+    return index % 7 === 0 ? "bento-span-featured" : "bento-span-tall";
   }
 
   return index % 4 === 2 ? "bento-span-wide" : "bento-span-default";
@@ -57,36 +54,40 @@ export function getBentoImageClass(
   return "aspect-[4/3]";
 }
 
-const photographyPattern = [
-  "bento-span-featured",
-  "bento-span-default",
-  "bento-span-tall",
-  "bento-span-wide",
-  "bento-span-default",
-  "bento-span-default",
-] as const;
+/**
+ * Aspect-led mosaic for longer photography lists.
+ * Every tile spans 2 rows so dense packing never leaves 1-row black holes.
+ * Portraits stay tall (full height); landscapes get the larger featured cell.
+ */
+function getPhotographyBentoClass(_index: number, aspect: BentoAspect) {
+  if (aspect === "landscape") {
+    return "bento-span-featured";
+  }
+
+  return "bento-span-tall";
+}
 
 const featuredLayouts: Record<number, string[]> = {
   4: [
     "bento-span-featured",
-    "bento-span-wide",
-    "bento-span-default",
     "bento-span-tall",
+    "bento-span-tall",
+    "bento-span-featured",
   ],
   5: [
     "bento-span-featured",
-    "bento-span-wide",
-    "bento-span-default",
     "bento-span-tall",
-    "bento-span-wide",
+    "bento-span-tall",
+    "bento-span-featured",
+    "bento-span-tall",
   ],
   6: [
     "bento-span-featured",
-    "bento-span-wide",
-    "bento-span-default",
     "bento-span-tall",
-    "bento-span-wide",
-    "bento-span-default",
+    "bento-span-tall",
+    "bento-span-featured",
+    "bento-span-tall",
+    "bento-span-tall",
   ],
 };
 
@@ -95,14 +96,21 @@ export function getFeaturedBentoClass(
   total: number,
   aspect: BentoAspect = "landscape",
 ) {
-  const layout = featuredLayouts[total];
-  if (layout?.[index]) {
-    return layout[index];
+  // Longer galleries: size by photo aspect so subjects aren't crushed into short cells.
+  if (total > 6) {
+    return getPhotographyBentoClass(index, aspect);
   }
 
-  // Photography (and other longer lists): repeat a tight mosaic pattern.
-  if (total > 6) {
-    return photographyPattern[index % photographyPattern.length];
+  const layout = featuredLayouts[total];
+  if (layout?.[index]) {
+    // Prefer aspect when the fixed slot would crush a portrait into a wide short cell.
+    if (aspect === "portrait" && layout[index] === "bento-span-wide") {
+      return "bento-span-tall";
+    }
+    if (aspect === "landscape" && layout[index] === "bento-span-tall") {
+      return "bento-span-featured";
+    }
+    return layout[index];
   }
 
   return getBentoItemClass({

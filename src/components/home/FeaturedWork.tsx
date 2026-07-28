@@ -55,7 +55,7 @@ export function FeaturedWork() {
                         ? "(max-width: 1024px) 100vw, 50vw"
                         : "(max-width: 768px) 100vw, 25vw"
                     }
-                    className="object-cover object-top"
+                    className="object-cover object-center"
                     loading="lazy"
                     unoptimized={item.src.startsWith("/images/")}
                   />

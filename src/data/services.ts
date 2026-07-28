@@ -34,9 +34,9 @@ export const services: Service[] = [
       "Dance photography that captures expression, movement, emotion, and every moment worth reliving—from rehearsals to standing ovations.",
     cta: { label: "Book a Shoot", href: "/contact?service=photo" },
     highlights: [
-      "Performance Photography",
-      "Portrait & Concept Shoots",
-      "Event & Sabha Coverage",
+      "Stage Performances",
+      "Artist Portraits",
+      "Arangetrams & Dance Events",
     ],
     seoTitle: "Dance Photography & Bharatanatyam Photographer",
     seoDescription:
