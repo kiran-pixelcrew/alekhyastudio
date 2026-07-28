@@ -21,7 +21,7 @@ export default function InvitationsPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Rangapravesha & Arangetram invitation design"
+        title="Your show deserves an invitation people actually want to open."
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">
@@ -34,28 +34,48 @@ export default function InvitationsPage() {
         </div>
       </PageHero>
 
+      <section className="px-5 py-12 md:px-8">
+        <FadeIn className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="What we design"
+            title="Invitations, posters, and programme booklets"
+          />
+          <ul className="mt-8 grid gap-6 md:grid-cols-3">
+            {service.highlights.map((item) => (
+              <li
+                key={item}
+                className="border border-charcoal/10 bg-cream-soft p-6"
+              >
+                <h3 className="font-display text-xl text-charcoal">{item}</h3>
+              </li>
+            ))}
+          </ul>
+        </FadeIn>
+      </section>
+
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl space-y-20">
           <div>
             <FadeIn>
               <SectionHeading
-                eyebrow="Suites"
-                title="Invitation stories"
-                description="Premium print and digital designs for classical dance debuts and events."
+                eyebrow="Portfolio"
+                title="Invitation & poster work"
+                description="Elegant, culturally rooted designs for arangetrams, recitals, and festivals."
               />
             </FadeIn>
-            <div className="mt-12 grid gap-10 md:grid-cols-3">
+            <div className="mt-12 grid gap-10">
               {invitationProjects.map((project, i) => (
                 <FadeIn key={project.id} delay={i * 60}>
-                  <article>
-                    <div className="img-zoom relative aspect-[4/5] overflow-hidden">
+                  <article className="mx-auto w-full max-w-5xl">
+                    <div className="img-zoom relative aspect-[32/15] overflow-hidden bg-charcoal/5">
                       <Image
                         src={project.src}
                         alt={project.alt}
                         fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover"
+                        sizes="100vw"
+                        className="object-contain"
                         loading="lazy"
+                        unoptimized={project.src.startsWith("/images/")}
                       />
                     </div>
                     <p className="mt-4 text-xs uppercase tracking-[0.16em] text-terracotta">
@@ -104,7 +124,7 @@ export default function InvitationsPage() {
         description="Share your ceremony details — we'll propose invitation directions within a few days."
         primary={{
           href: "/contact?service=invite",
-          label: "Request an Invitation",
+          label: "Design My Invitation",
         }}
         secondary={{ href: "/photography", label: "Add photography" }}
       />

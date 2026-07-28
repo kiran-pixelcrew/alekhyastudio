@@ -8,9 +8,9 @@ import { services } from "@/data/services";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Services for Performing Artists",
+  title: "Services",
   description:
-    "Dance photography, Rangapravesha invitations, artist branding, portfolio websites, classical dance marketing, and creative design by Alekhya Studio.",
+    "Dance photography, invitation & poster design, and portfolio websites for dancers, choreographers, and artists — by Alekhya Studio.",
 };
 
 export default function ServicesPage() {
@@ -18,11 +18,11 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="A complete creative practice for artists"
-        description="Six offerings designed around classical dance, music, and the institutions that nurture them."
+        title="Three crafts. One artistic eye."
+        description="Photography, invitations, and portfolio websites — all made by people who actually understand abhinaya, adavus, and why your entry pose matters."
       >
         <Button href="/contact" variant="primary" size="lg">
-          Start an Enquiry
+          Start a Project
         </Button>
       </PageHero>
 
@@ -48,7 +48,7 @@ export default function ServicesPage() {
                   <div>
                     <p className="text-charcoal-muted">{service.description}</p>
                     <ul className="mt-4 flex flex-wrap gap-x-1 gap-y-2">
-                      {service.highlights.slice(0, 4).map((item, index, arr) => (
+                      {service.highlights.map((item, index, arr) => (
                         <li
                           key={item}
                           className="text-xs uppercase tracking-[0.12em] text-charcoal/55"
@@ -78,13 +78,9 @@ export default function ServicesPage() {
 
       <CTABanner
         title="Not sure where to begin?"
-        description="Book a consultation — we'll map photography, invitations, branding, or web to your milestone."
-        primary={{
-          href: site.calendly,
-          label: "Book a Consultation",
-          external: true,
-        }}
-        secondary={{ href: "/work", label: "View work first" }}
+        description="Many clients need photography and invitations together — tell us about your show and we'll map the right path."
+        primary={{ href: "/contact", label: "Start a Project" }}
+        secondary={{ href: site.whatsapp, label: "WhatsApp Us", external: true }}
       />
     </>
   );

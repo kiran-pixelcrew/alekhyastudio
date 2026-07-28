@@ -10,7 +10,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Alekhya Studio is a premium creative practice for India's classical performing arts community — based in Bangalore.",
+    "We're not photographers who learned dance. We're dancers who picked up a camera. Alekhya Studio — dance photography, invitation design, and portfolio websites in Bangalore.",
 };
 
 export default function AboutPage() {
@@ -21,7 +21,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title={about.headline}
-        description="A boutique studio devoted to dance photography, invitations, branding, and digital presence for performing artists."
+        description="One artist understanding another — building every visual moment of your journey with the same care you bring to the stage."
       />
 
       <section className="px-5 py-16 md:px-8 md:py-24">
@@ -47,7 +47,7 @@ export default function AboutPage() {
           <div>
             <FadeIn>
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">
-                Our story
+                The studio story
               </p>
               <div className="mt-4 space-y-4 text-lg leading-relaxed text-charcoal-muted">
                 {about.story.map((paragraph) => (
@@ -58,7 +58,7 @@ export default function AboutPage() {
 
             <FadeIn className="mt-14">
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">
-                Philosophy
+                How we work
               </p>
               <ul className="mt-6 space-y-6">
                 {about.philosophy.map((item) => (
@@ -74,7 +74,7 @@ export default function AboutPage() {
 
             <FadeIn className="mt-10">
               <Button href="/contact" variant="primary">
-                Say hello
+                Start a Project
               </Button>
             </FadeIn>
           </div>
@@ -83,13 +83,9 @@ export default function AboutPage() {
 
       <CTABanner
         title="Work with Alekhya Studio"
-        description={`Based in ${site.location} — serving artists, academies, and families across the classical performing arts.`}
+        description={`Based in ${site.location} — serving dancers, choreographers, gurus, and academies across India.`}
         primary={{ href: "/contact", label: "Get in touch" }}
-        secondary={{
-          href: site.calendly,
-          label: "Book a Consultation",
-          external: true,
-        }}
+        secondary={{ href: site.whatsapp, label: "WhatsApp Us", external: true }}
       />
     </>
   );

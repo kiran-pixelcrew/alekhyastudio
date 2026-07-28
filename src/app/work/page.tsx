@@ -7,9 +7,9 @@ import { workItems } from "@/data/work";
 import { withBustedSrc } from "@/lib/publicAsset";
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Our Work",
   description:
-    "Portfolio of dance photography, Rangapravesha invitations, artist branding, websites, and creative design by Alekhya Studio.",
+    "Portfolio of dance photography, invitation design, and portfolio websites by Alekhya Studio — one artistic eye, three outputs.",
 };
 
 export default function WorkPage() {
@@ -19,8 +19,8 @@ export default function WorkPage() {
     <>
       <PageHero
         eyebrow="Portfolio"
-        title="Work for the classical stage"
-        description="Explore photography, invitations, branding, websites, marketing, and creative design for performing artists."
+        title="Our Work"
+        description="Photography, invitations, posters, and portfolio websites — filterable across all three crafts."
       />
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
@@ -28,14 +28,10 @@ export default function WorkPage() {
         </div>
       </section>
       <CTABanner
-        title="Ready to create yours?"
-        description="Tell us about your art form and milestone — we'll recommend the right path."
-        primary={{ href: "/contact", label: "Send an Enquiry" }}
-        secondary={{
-          href: site.calendly,
-          label: "Book a Consultation",
-          external: true,
-        }}
+        title="Have a show coming up? A portfolio that needs to catch up to your talent?"
+        description="Let's talk."
+        primary={{ href: "/contact", label: "Start a Project" }}
+        secondary={{ href: site.whatsapp, label: "WhatsApp Us", external: true }}
       />
     </>
   );

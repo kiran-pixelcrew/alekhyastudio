@@ -23,19 +23,22 @@ const body = Figtree({
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.displayName} — Dance Photography & Performing Arts Branding`,
+    default: `${site.displayName} | Dance Photography, Invitation Design & Artist Portfolio Websites`,
     template: `%s · ${site.displayName}`,
   },
   description: site.description,
   keywords: [
-    "Dance Photography",
-    "Bharatanatyam Photography",
-    "Arangetram Photography",
-    "Rangapravesha Invitation Design",
-    "Dance Website Design",
-    "Artist Portfolio Website",
-    "Dance Branding",
-    "Classical Dance Marketing",
+    "dance photography India",
+    "dance photography Bangalore",
+    "Bharatanatyam photographer",
+    "Kathak performance photographer",
+    "arangetram photography",
+    "arangetram invitation design",
+    "dance event poster design",
+    "portfolio website for dancers",
+    "website design for performing artists",
+    "choreographer portfolio website",
+    "dance academy website design",
   ],
   openGraph: {
     title: site.displayName,

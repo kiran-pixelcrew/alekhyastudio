@@ -12,9 +12,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/arts-crafts", destination: "/creative", permanent: true },
+      { source: "/arts-crafts", destination: "/invitations", permanent: true },
       { source: "/design", destination: "/invitations", permanent: true },
+      { source: "/design-studio", destination: "/invitations", permanent: true },
       { source: "/web", destination: "/websites", permanent: true },
+      { source: "/branding", destination: "/services", permanent: true },
+      { source: "/marketing", destination: "/services", permanent: true },
+      { source: "/creative", destination: "/invitations", permanent: true },
     ];
   },
 };

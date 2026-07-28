@@ -1,11 +1,9 @@
 import { Hero } from "@/components/home/Hero";
-import { Manifesto } from "@/components/home/Manifesto";
-import { Audience } from "@/components/home/Audience";
-import { FeaturedWork } from "@/components/home/FeaturedWork";
-import { SignatureOffering } from "@/components/home/SignatureOffering";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
+import { WhyAlekhya } from "@/components/home/WhyAlekhya";
+import { FeaturedWork } from "@/components/home/FeaturedWork";
 import { Testimonials } from "@/components/home/Testimonials";
-import { ContactSection } from "@/components/home/ContactSection";
+import { FinalCTA } from "@/components/home/FinalCTA";
 import { getHeroSlides } from "@/data/hero";
 
 export default function HomePage() {
@@ -14,13 +12,11 @@ export default function HomePage() {
   return (
     <>
       <Hero slides={heroSlides} />
-      <Manifesto />
-      <Audience />
-      <FeaturedWork />
-      <SignatureOffering />
       <ServicesOverview />
+      <WhyAlekhya />
+      <FeaturedWork />
       <Testimonials />
-      <ContactSection />
+      <FinalCTA />
     </>
   );
 }

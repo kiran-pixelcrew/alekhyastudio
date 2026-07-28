@@ -22,7 +22,7 @@ export function Footer() {
                 Studio feed
               </p>
               <h2 className="mt-2 font-display text-3xl text-cream-soft">
-                Classical moments, curated
+                {site.tagline}
               </h2>
             </div>
             <a
@@ -64,8 +64,8 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/65">
               {site.mission} Based in {site.location}. Dance photography,
-              Rangapravesha invitations, artist branding, and portfolio websites
-              for the classical performing arts.
+              invitation & poster design, and portfolio websites for performing
+              artists.
             </p>
             <div className="mt-6 space-y-2 text-sm">
               <p>

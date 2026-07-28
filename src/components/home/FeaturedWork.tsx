@@ -15,12 +15,12 @@ export function FeaturedWork() {
         <FadeIn>
           <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <SectionHeading
-              eyebrow="Selected work"
-              title="A quiet gallery of stage and story"
-              description="Dance photography, invitation suites, and brand worlds — curated for classical artists."
+              eyebrow="Featured work"
+              title="One eye, three outputs"
+              description="Photography, poster design, and portfolio websites — shown together, because that's how we work."
             />
             <Button href="/work" variant="ghost" className="shrink-0 self-start">
-              View full portfolio
+              See the Full Portfolio
             </Button>
           </div>
         </FadeIn>

@@ -1,10 +1,7 @@
 export type ServiceId =
   | "photography"
   | "invitations"
-  | "branding"
-  | "websites"
-  | "marketing"
-  | "creative";
+  | "websites";
 
 export type Service = {
   id: ServiceId;
@@ -24,134 +21,63 @@ export const services: Service[] = [
   {
     id: "photography",
     href: "/photography",
-    title: "Dance Photography & Videography",
+    title: "Dance Photography",
     shortTitle: "Photography",
-    eyebrow: "Capture",
+    eyebrow: "Photography",
     summary:
-      "Classical dance photography, stage documentation, costume portraits, and performance film.",
+      "Performance photography, portrait sessions, and event coverage that capture abhinaya, energy, and expression.",
     description:
-      "From Bharatanatyam photography to Rangapravesha and Arangetram coverage — we photograph movement, mudra, and emotion with editorial care.",
+      "Every dance form has a thousand small moments most cameras miss — the breath before a jump, the exact frame where abhinaya turns into emotion, the split second a guru's eyes soften watching their student. That's what we shoot for.",
     cta: { label: "Book a Shoot", href: "/contact?service=photo" },
     highlights: [
-      "Dance & Bharatanatyam photography",
-      "Rangapravesha / Arangetram coverage",
-      "Stage & costume photography",
-      "Artist portraits & headshots",
-      "Dance videography",
+      "Performance Photography",
+      "Portrait & Concept Shoots",
+      "Event & Sabha Coverage",
     ],
-    seoTitle: "Dance Photography & Bharatanatyam Photography",
+    seoTitle: "Dance Photography & Bharatanatyam Photographer",
     seoDescription:
-      "Premium dance photography, Bharatanatyam photography, Rangapravesha and Arangetram photography, stage photography, and classical dance videography in Bangalore.",
+      "Dance photography in Bangalore — Bharatanatyam photographer, Kathak performance photography, arangetram photography, classical dance photoshoots, and dance portrait sessions.",
   },
   {
     id: "invitations",
     href: "/invitations",
-    title: "Rangapravesha & Arangetram Invitations",
-    shortTitle: "Invitations",
-    eyebrow: "Invite",
+    title: "Invitation & Event Poster Design",
+    shortTitle: "Design Studio",
+    eyebrow: "Design Studio",
     summary:
-      "Premium print and digital invitation suites for debuts and dance events.",
+      "Invitations and posters that carry the same emotion as your performance — rooted in classical aesthetics, sharp enough for a WhatsApp forward and a printed card both.",
     description:
-      "Invitation design that honours tradition — Rangapravesha invitation design, Arangetram invitation design, and dance event stationery with quiet luxury.",
-    cta: { label: "Request an Invitation", href: "/contact?service=invite" },
+      "We design invitations and posters that carry the same emotion as your performance — rooted in classical aesthetics, but sharp enough for a WhatsApp forward and a printed card both.",
+    cta: { label: "Design My Invitation", href: "/contact?service=invite" },
     highlights: [
-      "Rangapravesha invitation design",
-      "Arangetram invitation design",
-      "Digital invitations & RSVP",
-      "Premium print suites",
-      "Matching event stationery",
+      "Arangetram & Recital Invitations",
+      "Event & Show Posters",
+      "Programme Booklets / Digital Invites",
     ],
-    seoTitle: "Rangapravesha & Arangetram Invitation Design",
+    seoTitle: "Arangetram Invitation Design & Dance Event Posters",
     seoDescription:
-      "Elegant Rangapravesha invitation design and Arangetram invitation design — digital and premium print invitations for classical dance events.",
-  },
-  {
-    id: "branding",
-    href: "/branding",
-    title: "Artist & Academy Branding",
-    shortTitle: "Branding",
-    eyebrow: "Identity",
-    summary:
-      "Logos, brand systems, and visual identity for artists and dance schools.",
-    description:
-      "Performing arts branding that feels cultural and contemporary — dance logo design, academy identity, and artist brand kits.",
-    cta: { label: "Start Branding", href: "/contact?service=branding" },
-    highlights: [
-      "Artist branding",
-      "Dance school branding",
-      "Logo & brand identity",
-      "Stationery & social templates",
-      "Brand guidelines",
-    ],
-    seoTitle: "Dance Branding & Artist Brand Identity",
-    seoDescription:
-      "Artist branding, dance school branding, dance logo design, and performing arts brand identity for classical dancers and academies.",
+      "Arangetram invitation design, dance event poster design, Indian classical dance invitations, recital invitation designer, and cultural event poster design.",
   },
   {
     id: "websites",
     href: "/websites",
-    title: "Artist & Institute Websites",
-    shortTitle: "Websites",
-    eyebrow: "Presence",
+    title: "Artist Portfolio Websites",
+    shortTitle: "Portfolio Websites",
+    eyebrow: "Portfolio Websites",
     summary:
-      "Portfolio and institute websites designed for bookings and credibility.",
+      "Custom portfolio websites for dancers, choreographers, and gurus — built to showcase your journey the way it deserves to be seen.",
     description:
-      "Artist portfolio websites, dance institute websites, and music school sites — photography-forward, fast, and enquiry-ready.",
-    cta: { label: "Get a Website Quote", href: "/contact?service=web" },
+      "A proper portfolio website means event organizers, students, and collaborators find you and understand your work in one visit — no scrolling through 400 Instagram posts to figure out what you do.",
+    cta: { label: "Build My Portfolio", href: "/contact?service=web" },
     highlights: [
-      "Artist portfolio websites",
-      "Dance institute websites",
-      "Music school websites",
-      "Website redesign",
-      "Booking & enquiry flows",
+      "Custom design reflecting your artistic identity",
+      "Performance reels, photo galleries, bio, and press",
+      "Contact/booking-friendly layout for organizers",
+      "Mobile-first (because that's how you'll be found)",
     ],
-    seoTitle: "Dance Website Design & Artist Portfolios",
+    seoTitle: "Portfolio Website for Dancers & Performing Artists",
     seoDescription:
-      "Dance website design, artist portfolio websites, dance school and music school websites, and performing arts web redesign in Bangalore.",
-  },
-  {
-    id: "marketing",
-    href: "/marketing",
-    title: "Digital Marketing for Artists",
-    shortTitle: "Marketing",
-    eyebrow: "Reach",
-    summary:
-      "Instagram branding, content, event promotion, and SEO for performing artists.",
-    description:
-      "Classical dance marketing that stays elegant — social media management, Instagram branding, content creation, and SEO for artists and academies.",
-    cta: { label: "Plan Marketing", href: "/contact?service=marketing" },
-    highlights: [
-      "Social media management",
-      "Instagram branding",
-      "Content creation",
-      "Event promotion",
-      "SEO optimization",
-    ],
-    seoTitle: "Dance Social Media & Classical Dance Marketing",
-    seoDescription:
-      "Dance social media management, Instagram branding, classical dance marketing, event promotion, and SEO for performing artists.",
-  },
-  {
-    id: "creative",
-    href: "/creative",
-    title: "Creative Design & Event Branding",
-    shortTitle: "Creative",
-    eyebrow: "Craft",
-    summary:
-      "Posters, certificates, brochures, merchandise, and full event branding.",
-    description:
-      "Creative design for performances and institutions — posters, brochures, certificates, merchandise, and presentation design.",
-    cta: { label: "Request Creative Work", href: "/contact?service=creative" },
-    highlights: [
-      "Posters & brochures",
-      "Certificates",
-      "Event branding",
-      "Merchandise",
-      "Presentation design",
-    ],
-    seoTitle: "Dance Event Branding & Creative Design",
-    seoDescription:
-      "Posters, brochures, certificates, event branding, and merchandise design for classical dance performances and academies.",
+      "Portfolio website for dancers, website design for performing artists, choreographer portfolio website, artist website designer India, and dance academy website design.",
   },
 ];
 

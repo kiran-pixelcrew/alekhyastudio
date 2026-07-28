@@ -2,16 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { navLinks, site } from "@/data/site";
+import { useEffect, useRef, useState } from "react";
+import { navLinks, serviceNavLinks, site } from "@/data/site";
 import { Button } from "@/components/shared/Button";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
   const isHome = pathname === "/";
   const solid = !isHome || scrolled || open;
+
+  const isServiceActive = serviceNavLinks.some(
+    (link) =>
+      pathname === link.href || pathname.startsWith(`${link.href}/`),
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,7 +37,29 @@ export function Header() {
 
   useEffect(() => {
     setOpen(false);
+    setServicesOpen(false);
+    setMobileServicesOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        servicesRef.current &&
+        !servicesRef.current.contains(event.target as Node)
+      ) {
+        setServicesOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const linkClass = (active: boolean) =>
+    [
+      "text-sm tracking-wide transition-colors hover:text-terracotta",
+      solid ? "text-charcoal-muted" : "text-cream/85",
+      active ? (solid ? "text-terracotta" : "text-cream") : "",
+    ].join(" ");
 
   return (
     <header
@@ -53,30 +83,56 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+          <div ref={servicesRef} className="relative">
+            <button
+              type="button"
+              className={[
+                linkClass(isServiceActive),
+                "inline-flex items-center gap-1",
+              ].join(" ")}
+              aria-expanded={servicesOpen}
+              aria-haspopup="true"
+              onClick={() => setServicesOpen((value) => !value)}
+            >
+              Services
+              <span aria-hidden className="text-[0.65rem]">
+                ▾
+              </span>
+            </button>
+            {servicesOpen ? (
+              <div className="absolute left-0 top-full z-50 mt-2 min-w-[220px] border border-charcoal/10 bg-cream py-2 shadow-lg">
+                {serviceNavLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="block px-4 py-2.5 text-sm text-charcoal-muted transition hover:bg-cream-deep hover:text-terracotta"
+                    onClick={() => setServicesOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={[
-                "text-sm tracking-wide transition-colors hover:text-terracotta",
-                solid ? "text-charcoal-muted" : "text-cream/85",
-                pathname === link.href || pathname.startsWith(`${link.href}/`)
-                  ? solid
-                    ? "text-terracotta"
-                    : "text-cream"
-                  : "",
-              ].join(" ")}
+              className={linkClass(
+                pathname === link.href ||
+                  pathname.startsWith(`${link.href}/`),
+              )}
             >
               {link.label}
             </Link>
           ))}
           <Button
-            href={site.calendly}
-            external
+            href="/contact"
             variant={solid ? "primary" : "secondary"}
             size="sm"
           >
-            Book a Consultation
+            Start a Project
           </Button>
         </nav>
 
@@ -127,6 +183,32 @@ export function Header() {
           className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-6"
           aria-label="Mobile"
         >
+          <button
+            type="button"
+            className="flex items-center justify-between rounded-sm px-3 py-3 text-lg text-charcoal transition hover:bg-cream-deep hover:text-terracotta"
+            aria-expanded={mobileServicesOpen}
+            onClick={() => setMobileServicesOpen((value) => !value)}
+          >
+            Services
+            <span aria-hidden className="text-sm">
+              {mobileServicesOpen ? "▴" : "▾"}
+            </span>
+          </button>
+          {mobileServicesOpen ? (
+            <div className="ml-4 flex flex-col gap-1 border-l border-charcoal/10 pl-4">
+              {serviceNavLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-sm px-3 py-2 text-base text-charcoal-muted transition hover:bg-cream-deep hover:text-terracotta"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -137,16 +219,9 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="rounded-sm px-3 py-3 text-lg text-charcoal transition hover:bg-cream-deep hover:text-terracotta"
-            onClick={() => setOpen(false)}
-          >
-            Contact
-          </Link>
           <div className="mt-4 px-3">
-            <Button href={site.calendly} external variant="primary" className="w-full">
-              Book a Consultation
+            <Button href="/contact" variant="primary" className="w-full">
+              Start a Project
             </Button>
           </div>
         </nav>

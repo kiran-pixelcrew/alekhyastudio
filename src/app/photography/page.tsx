@@ -4,6 +4,7 @@ import { Button } from "@/components/shared/Button";
 import { FilterableGallery } from "@/components/photography/FilterableGallery";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { FadeIn } from "@/components/shared/FadeIn";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { getService } from "@/data/services";
 import { photographyItems } from "@/data/photography";
 import { site } from "@/data/site";
@@ -23,7 +24,7 @@ export default function PhotographyPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Dance photography & classical performance film"
+        title="We don't wait for the pose. We wait for the feeling."
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">
@@ -38,13 +39,17 @@ export default function PhotographyPage() {
 
       <section className="px-5 py-12 md:px-8">
         <FadeIn className="mx-auto max-w-7xl">
-          <ul className="flex flex-wrap gap-2">
+          <SectionHeading
+            eyebrow="What we shoot"
+            title="Performance, portraits, and sabha coverage"
+          />
+          <ul className="mt-8 grid gap-6 md:grid-cols-3">
             {service.highlights.map((item) => (
               <li
                 key={item}
-                className="rounded-sm border border-charcoal/10 bg-cream-soft px-3 py-1.5 text-sm text-charcoal-muted"
+                className="border border-charcoal/10 bg-cream-soft p-6"
               >
-                {item}
+                <h3 className="font-display text-xl text-charcoal">{item}</h3>
               </li>
             ))}
           </ul>
@@ -58,10 +63,10 @@ export default function PhotographyPage() {
       </section>
 
       <CTABanner
-        title="Planning a Rangapravesha or Arangetram?"
-        description="Book classical dance photography and videography with a team that understands the stage."
+        title="Planning an arangetram or recital?"
+        description="Book photography and pair it with invitation design — one studio, one vision."
         primary={{ href: "/contact?service=photo", label: "Book a Shoot" }}
-        secondary={{ href: "/invitations", label: "Pair with invitations" }}
+        secondary={{ href: "/invitations", label: "See invitation design" }}
       />
     </>
   );

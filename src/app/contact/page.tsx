@@ -8,16 +8,16 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a consultation or enquire about dance photography, Rangapravesha invitations, branding, websites, and marketing with Alekhya Studio in Bangalore.",
+    "Tell us what you're building — a show, a portfolio, or both. Dance photography, invitation design, and portfolio websites by Alekhya Studio in Bangalore.",
 };
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Contact"
-        title="Book, enquire, or consult"
-        description="Choose photography, invitations, branding, websites, marketing, or creative — or schedule a consultation."
+        eyebrow="Start a Project"
+        title="Tell us what you're building — a show, a portfolio, or both."
+        description="Photography, invitations, posters, portfolio websites — or not sure yet. We'll figure it out together."
       />
 
       <section className="px-5 py-16 md:px-8 md:py-24">
@@ -60,32 +60,24 @@ export default function ContactPage() {
             </dl>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={site.whatsapp} external variant="teal">
-                WhatsApp
+              <Button href={site.whatsapp} external variant="teal" size="lg">
+                WhatsApp Us
               </Button>
               <Button href={site.instagram} external variant="ghost">
                 Instagram
               </Button>
             </div>
 
-            <div className="mt-10 border border-charcoal/10 bg-cream-soft p-6">
-              <h3 className="font-display text-2xl text-charcoal">
-                Consultation calendar
-              </h3>
-              <p className="mt-2 text-sm text-charcoal-muted">
-                Prefer to pick a time? Open the calendar for consultation slots.
-              </p>
-              <div className="mt-4">
-                <Button href={site.calendly} external variant="primary">
-                  Book a Consultation
-                </Button>
-              </div>
-            </div>
+            <p className="mt-8 text-sm text-charcoal-muted leading-relaxed">
+              Dancers, gurus, and event organizers tend to respond faster on
+              WhatsApp — feel free to message us directly with your show date,
+              art form, and what you need.
+            </p>
           </FadeIn>
 
           <FadeIn delay={80}>
             <h2 className="mb-6 font-display text-3xl text-charcoal">
-              Send an enquiry
+              Send a message
             </h2>
             <ContactFormWithParams />
           </FadeIn>

@@ -29,7 +29,7 @@ export default function WebsitesPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Artist portfolio & institute websites"
+        title="You've spent years building your art. Your website shouldn't look like it took ten minutes."
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">
@@ -42,36 +42,33 @@ export default function WebsitesPage() {
         </div>
       </PageHero>
 
+      <section className="px-5 py-12 md:px-8">
+        <FadeIn className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="What's included"
+            title="A portfolio that works as hard as you do"
+          />
+          <ul className="mt-8 grid gap-6 sm:grid-cols-2">
+            {service.highlights.map((item) => (
+              <li
+                key={item}
+                className="border border-charcoal/10 bg-cream-soft p-6"
+              >
+                <p className="text-charcoal-muted">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </FadeIn>
+      </section>
+
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl space-y-20">
           <div>
             <FadeIn>
               <SectionHeading
-                eyebrow="Process"
-                title="How we build artist websites"
-                description="A clear four-step journey from discovery to launch."
-              />
-            </FadeIn>
-            <div className="mt-12">
-              <ProcessSteps />
-            </div>
-          </div>
-
-          <div>
-            <FadeIn>
-              <SectionHeading eyebrow="Stack" title="Modern, maintainable tools" />
-            </FadeIn>
-            <FadeIn className="mt-8">
-              <TechStack />
-            </FadeIn>
-          </div>
-
-          <div>
-            <FadeIn>
-              <SectionHeading
-                eyebrow="Selected sites"
-                title="Past websites"
-                description="Portfolios and institutes designed for bookings and credibility."
+                eyebrow="Sample sites"
+                title="Portfolio websites & case studies"
+                description="For dancers, choreographers, gurus, and dance schools."
               />
             </FadeIn>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -117,6 +114,28 @@ export default function WebsitesPage() {
           <div>
             <FadeIn>
               <SectionHeading
+                eyebrow="Process"
+                title="How we build artist websites"
+                description="A clear four-step journey from discovery to launch."
+              />
+            </FadeIn>
+            <div className="mt-12">
+              <ProcessSteps />
+            </div>
+          </div>
+
+          <div>
+            <FadeIn>
+              <SectionHeading eyebrow="Stack" title="Modern, maintainable tools" />
+            </FadeIn>
+            <FadeIn className="mt-8">
+              <TechStack />
+            </FadeIn>
+          </div>
+
+          <div>
+            <FadeIn>
+              <SectionHeading
                 eyebrow="Investment"
                 title="Website packages"
                 description="Transparent starting points — every project is scoped to your art and audience."
@@ -130,14 +149,10 @@ export default function WebsitesPage() {
       </section>
 
       <CTABanner
-        title="Need a dance institute or artist website?"
-        description="Get a quote for portfolio sites, academy sites, and redesigns built for enquiries."
-        primary={{ href: "/contact?service=web", label: "Get a Website Quote" }}
-        secondary={{
-          href: site.calendly,
-          label: "Book a call",
-          external: true,
-        }}
+        title="Ready for a portfolio that matches your stage presence?"
+        description="Get a quote for dancer, choreographer, guru, or academy websites built for enquiries."
+        primary={{ href: "/contact?service=web", label: "Build My Portfolio" }}
+        secondary={{ href: site.whatsapp, label: "WhatsApp Us", external: true }}
       />
     </>
   );
