@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { navLinks, serviceNavLinks, site } from "@/data/site";
 import { Button } from "@/components/shared/Button";
+import Image from "next/image";
 
 export function Header() {
   const pathname = usePathname();
@@ -79,7 +80,7 @@ export function Header() {
           ].join(" ")}
           aria-label={`${site.displayName} home`}
         >
-          Alekhya<span className="text-terracotta">Studio</span>
+          <Image src="/logo.svg" alt="Alekhya Studio" width={100} height={100} className="w-60 h-60 object-contain" />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">

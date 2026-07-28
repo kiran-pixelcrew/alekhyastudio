@@ -25,25 +25,7 @@ export default function AboutPage() {
       />
 
       <section className="px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <FadeIn>
-            <div className="img-zoom relative aspect-[4/5] overflow-hidden">
-              <Image
-                src={person.src}
-                alt={person.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover"
-                priority
-              />
-            </div>
-            <p className="mt-4 font-display text-2xl text-charcoal">
-              {person.name}
-            </p>
-            <p className="text-sm text-charcoal-muted">{person.role}</p>
-            <p className="mt-3 text-charcoal-muted">{person.bio}</p>
-          </FadeIn>
-
+        <div className="mx-auto grid max-w-7xl gap-14 lg:gap-20">
           <div>
             <FadeIn>
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">

@@ -60,7 +60,7 @@ export function Footer() {
         <div className="grid gap-10 border-t border-cream/10 pt-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Link href="/" className="font-display text-3xl text-cream-soft">
-              Alekhya<span className="text-terracotta-soft">Studio</span>
+              Alekhya<span className="text-button">Studio</span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/65">
               {site.mission} Based in {site.location}. Dance photography,

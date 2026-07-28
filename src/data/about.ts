@@ -51,8 +51,6 @@ export const about = {
       name: "Alekhya",
       role: "Founder · Dancer, Choreographer & Creative Lead",
       bio: "A dancer and choreographer who picked up a camera — now leading a crew that designs every visual moment of a performing artist's journey.",
-      src: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80",
-      alt: "Portrait of Alekhya, founder of Alekhya Studio",
     },
   ],
 };

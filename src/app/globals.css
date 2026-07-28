@@ -4,6 +4,9 @@
   --terracotta: #c1502e;
   --terracotta-deep: #9a3d22;
   --terracotta-soft: #d4785a;
+  --button: #e6562a;
+  --button-deep: #c44722;
+  --button-soft: #f07a55;
   --teal: #1f4b4a;
   --teal-soft: #2d6361;
   --cream: #f5ede1;
@@ -19,6 +22,9 @@
   --color-terracotta: var(--terracotta);
   --color-terracotta-deep: var(--terracotta-deep);
   --color-terracotta-soft: var(--terracotta-soft);
+  --color-button: var(--button);
+  --color-button-deep: var(--button-deep);
+  --color-button-soft: var(--button-soft);
   --color-teal: var(--teal);
   --color-teal-soft: var(--teal-soft);
   --color-cream: var(--cream);
@@ -54,6 +60,15 @@ body {
   background: var(--cream);
   color: var(--charcoal);
   font-family: var(--font-body), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
 }
 
 ::selection {
@@ -127,6 +142,46 @@ body {
 .masonry > * {
   break-inside: avoid;
   margin-bottom: 1rem;
+}
+
+.bento-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-auto-flow: dense;
+}
+
+@media (min-width: 640px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bento-span-wide {
+    grid-column: span 2;
+  }
+
+  .bento-span-tall {
+    grid-row: span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .bento-span-featured {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+.bento-span-full {
+  grid-column: 1 / -1;
+}
+
+.bento-item {
+  min-width: 0;
 }
 
 /* Skip link */

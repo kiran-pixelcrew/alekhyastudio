@@ -8,19 +8,18 @@ import {
   type WorkItem,
 } from "@/data/work";
 import { Button } from "@/components/shared/Button";
+import { getBentoImageClass, getFeaturedBentoClass } from "@/lib/bentoGrid";
 
 type WorkGalleryProps = {
   items: WorkItem[];
 };
 
 export function WorkGallery({ items }: WorkGalleryProps) {
-  const [active, setActive] = useState<WorkCategory>("all");
+  const [active, setActive] = useState<WorkCategory>("photography");
+  const useBento = active === "photography";
 
   const filtered = useMemo(
-    () =>
-      active === "all"
-        ? items
-        : items.filter((item) => item.category === active),
+    () => items.filter((item) => item.category === active),
     [active, items],
   );
 
@@ -42,7 +41,7 @@ export function WorkGallery({ items }: WorkGalleryProps) {
               className={[
                 "shrink-0 rounded-sm px-4 py-2 text-sm tracking-wide transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta",
                 selected
-                  ? "bg-terracotta text-cream-soft"
+                  ? "bg-button text-cream-soft"
                   : "bg-cream-deep text-charcoal-muted hover:text-charcoal",
               ].join(" ")}
               onClick={() => setActive(category.id)}
@@ -54,59 +53,81 @@ export function WorkGallery({ items }: WorkGalleryProps) {
       </div>
 
       <ul
-        className={[
-          "grid gap-4",
-          filtered.length === 1
-            ? "grid-cols-1"
-            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2",
-        ].join(" ")}
+        className={
+          useBento
+            ? "bento-grid"
+            : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        }
       >
-        {filtered.map((item) => {
-          const isInvitation = item.category === "invitations";
+        {filtered.map((item, index) => {
+          const isInvitation = item.category === "invitations&creatives";
+          const spanClass = useBento
+            ? getFeaturedBentoClass(index, filtered.length, item.aspect)
+            : "";
+          const imageClass = useBento
+            ? getBentoImageClass(spanClass, item.aspect, {
+                contain: isInvitation && filtered.length === 1,
+              })
+            : isInvitation
+              ? "aspect-[16/10] bg-charcoal/5"
+              : "aspect-[16/10]";
 
           return (
             <li
               key={item.id}
-              className={
-                isInvitation ? "col-span-full mx-auto w-full max-w-5xl" : undefined
-              }
+              className={[
+                useBento ? "bento-item" : undefined,
+                spanClass || undefined,
+                useBento && isInvitation && filtered.length === 1
+                  ? "mx-auto w-full max-w-5xl"
+                  : undefined,
+              ]
+                .filter(Boolean)
+                .join(" ")}
             >
-              <article className={isInvitation ? "text-center" : undefined}>
+              <article className="group h-full">
                 <div
                   className={[
                     "img-zoom relative overflow-hidden",
-                    isInvitation
-                      ? "aspect-[32/15] bg-charcoal/5"
-                      : item.aspect === "landscape"
-                        ? "aspect-[4/3]"
-                        : item.aspect === "square"
-                          ? "aspect-square"
-                          : "aspect-[3/4]",
-                  ].join(" ")}
+                    useBento ? "h-full" : undefined,
+                    imageClass,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                 >
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     sizes={
-                      isInvitation
-                        ? "(max-width: 1024px) 100vw, 1024px"
+                      useBento
+                        ? spanClass.includes("featured") ||
+                          spanClass.includes("wide")
+                          ? "(max-width: 1024px) 100vw, 50vw"
+                          : "(max-width: 768px) 100vw, 25vw"
                         : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     }
                     className={
-                      isInvitation
+                      isInvitation && !useBento
                         ? "object-contain"
                         : "object-cover object-top"
                     }
                     loading="lazy"
                     unoptimized={item.src.startsWith("/images/")}
                   />
-                </div>
-                <div className="mt-3">
-                  <h3 className="font-display text-xl text-charcoal">{item.title}</h3>
-                  <p className="text-xs uppercase tracking-[0.16em] text-charcoal-muted">
-                    {workCategories.find((c) => c.id === item.category)?.label}
-                  </p>
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent p-4 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
+                    <p className="text-sm text-cream-soft">{item.title}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex w-fit items-center justify-center rounded-sm bg-button px-4 py-2 text-sm font-medium text-cream-soft transition hover:bg-button-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button"
+                      >
+                        Visit
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </article>
             </li>
