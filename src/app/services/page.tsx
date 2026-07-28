@@ -5,21 +5,20 @@ import { FadeIn } from "@/components/shared/FadeIn";
 import { Button } from "@/components/shared/Button";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { services } from "@/data/services";
-import { site } from "@/data/site";
+import { site, threeCrafts } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Services",
-  description:
-    "Dance photography, videography, invitation design, social media, and portfolio websites for dancers, choreographers, and artists — by Alekhya Studio.",
+  description: threeCrafts.intro,
 };
 
 export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Services"
-        title="One artistic eye. Every output your art needs."
-        description="Photography, videography, invitations, social media, and portfolio websites — all made by people who actually understand abhinaya, adavus, and why your entry pose matters."
+        eyebrow={threeCrafts.eyebrow}
+        title={threeCrafts.title}
+        description={threeCrafts.intro}
       >
         <Button href="/contact" variant="primary" size="lg">
           Start a Project
@@ -44,6 +43,9 @@ export default function ServicesPage() {
                         {service.title}
                       </Link>
                     </h2>
+                    <p className="mt-3 font-display text-lg text-terracotta">
+                      {service.tagline}
+                    </p>
                   </div>
                   <div>
                     <p className="text-charcoal-muted">{service.description}</p>
@@ -73,6 +75,12 @@ export default function ServicesPage() {
               </FadeIn>
             ))}
           </ul>
+
+          <FadeIn>
+            <p className="mx-auto mt-16 max-w-3xl border-t border-charcoal/10 pt-10 text-center font-display text-xl leading-relaxed text-charcoal-muted md:text-2xl">
+              {threeCrafts.closing}
+            </p>
+          </FadeIn>
         </div>
       </section>
 

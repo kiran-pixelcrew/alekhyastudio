@@ -1,11 +1,11 @@
-import { photographyItems } from "./photography";
 import { invitationProjects } from "./invitations";
 import { pastSites } from "./web";
+import type { PhotoItem } from "./photography";
 
 export type WorkCategory =
   | "photography"
   | "websites&portfolios"
-  | "invitations&creatives"
+  | "invitations&creatives";
 
 export const workCategories: { id: WorkCategory; label: string }[] = [
   { id: "photography", label: "Dance Photography" },
@@ -23,8 +23,14 @@ export type WorkItem = {
   href?: string;
 };
 
+/**
+ * Separate photography set for Our Work / Featured Work.
+ * Do not reuse hero images. Drop files in /public/images/work/ and add entries here.
+ */
+export const workPhotographyItems: PhotoItem[] = [];
+
 export const workItems: WorkItem[] = [
-  ...photographyItems.slice(0, 10).map((item) => ({
+  ...workPhotographyItems.map((item) => ({
     id: `w-${item.id}`,
     title: item.title,
     category: "photography" as const,
@@ -52,5 +58,5 @@ export const workItems: WorkItem[] = [
 ];
 
 export const featuredWork = workItems.filter((item) =>
-  ["w-s1", "w-s2", "w-s3", "w-s4"].includes(item.id),
-);
+  item.category === "photography",
+).slice(0, 4);

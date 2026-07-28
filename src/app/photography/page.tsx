@@ -19,7 +19,7 @@ export default function PhotographyPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="We don't wait for the pose. We wait for the feeling."
+        title={service.tagline}
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">

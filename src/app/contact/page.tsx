@@ -8,17 +8,21 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Tell us what you're building — a show, a portfolio, or both. Dance photography, invitation design, and portfolio websites by Alekhya Studio in Bangalore.",
+    "Tell us what you're creating—we'll take care of the rest. Dance photography, videography, invitation design, portfolio websites, and creative identity by Alekhya Studio.",
 };
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Start a Project"
-        title="Tell us what you're building — a show, a portfolio, or both."
-        description="Photography, invitations, posters, portfolio websites — or not sure yet. We'll figure it out together."
-      />
+        eyebrow="Contact"
+        title="Start Your Creative Journey"
+        description="Tell us what you're creating—we'll take care of the rest. Whether it's dance photography, videography, invitation design, a portfolio website, or a complete creative identity, we're here to make the journey seamless—from your first idea to the final applause."
+      >
+        <Button href="#message" variant="primary" size="lg">
+          Start a Project →
+        </Button>
+      </PageHero>
 
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -76,7 +80,10 @@ export default function ContactPage() {
           </FadeIn>
 
           <FadeIn delay={80}>
-            <h2 className="mb-6 font-display text-3xl text-charcoal">
+            <h2
+              id="message"
+              className="mb-6 scroll-mt-28 font-display text-3xl text-charcoal"
+            >
               Send a message
             </h2>
             <ContactFormWithParams />

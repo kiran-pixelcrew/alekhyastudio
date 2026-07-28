@@ -26,26 +26,30 @@ export const testimonials = [
 ];
 
 export const about = {
-  headline: "We're not photographers who learned dance. We're dancers who picked up a camera.",
+  headline: "Alekhya Studio was born to change that.",
+  intro: [
+    "Every artist pours countless hours into perfecting their craft. Yet when it's time to present that journey to the world, they're often left juggling photographers, designers, social media, and websites that never feel connected.",
+  ],
   story: [
-    "Alekhya Studio began with a simple observation: dancers spend years perfecting every adavu, every abhinaya, every entrance pose — and then hand their debut to a blurry stage photo and a Canva invitation.",
-    "Our founder is a dancer and choreographer who picked up a camera and a design tablet because she saw what others missed. Today, Alekhya leads a crew of artistic eyes who see dance the way dancers do.",
-    "This isn't a vendor relationship. It's one artist understanding another — and building every visual moment of your journey with the same care you bring to the stage.",
+    "Founded by a dancer, choreographer, photographer, and designer, Alekhya Studio brings every creative service under one artistic vision. What started with a camera and a passion for preserving performances has grown into a creative studio that helps artists present their work beautifully—on stage, in print, and online.",
+    "For us, this isn't just another project. It's one artist understanding another, creating every visual touchpoint with the same care, passion, and attention to detail that goes into every performance.",
   ],
-  philosophy: [
+  howWeWork: [
     {
-      title: "One eye, three outputs",
-      text: "Photography, invitations, and websites that speak the same visual language — because your art deserves a unified presence.",
+      title: "One Creative Vision",
+      text: "Photography, videography, invitations, branding, and portfolio websites—all designed to tell one consistent story. Because your art deserves a signature identity, not disconnected pieces.",
     },
     {
-      title: "We wait for the feeling",
-      text: "Abhinaya, adavus, mudras, stage timing — we know what to wait for, not just what looks good mid-jump.",
+      title: "We Wait for the Moment",
+      text: "Anyone can click the shutter. We wait for the perfect expression, the right mudra, the energy of the movement, and the emotion that makes a performance unforgettable.",
     },
     {
-      title: "Built by performers",
-      text: "We're not outsiders shooting a foreign art form. We understand the sabha committee, the debut nerves, and the weight of a first arangetram.",
+      title: "Created by Artists",
+      text: "We're not simply documenting performances—we understand them. From rehearsals and costume trials to debut jitters and standing ovations, we know the journey because we've lived it ourselves.",
     },
   ],
+  closing:
+    "We're not just here to capture your art. We're here to help the world experience it.",
   team: [
     {
       name: "Alekhya",

@@ -19,7 +19,7 @@ export default function VideographyPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Your performance deserves to live beyond the night it happened."
+        title={service.tagline}
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">

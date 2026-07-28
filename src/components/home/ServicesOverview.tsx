@@ -38,6 +38,12 @@ export function ServicesOverview() {
             </FadeIn>
           ))}
         </ul>
+
+        <FadeIn>
+          <p className="mx-auto mt-16 max-w-3xl border-t border-charcoal/10 pt-10 text-center font-display text-xl leading-relaxed text-charcoal-muted md:text-2xl">
+            {threeCrafts.closing}
+          </p>
+        </FadeIn>
       </div>
     </section>
   );

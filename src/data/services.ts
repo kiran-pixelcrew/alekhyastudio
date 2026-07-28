@@ -1,9 +1,9 @@
 export type ServiceId =
   | "photography"
-  | "invitations&creatives"
-  | "websites&portfolios"
   | "videography"
-  | "social-media";
+  | "websites&portfolios"
+  | "social-media"
+  | "invitations&creatives";
 
 export type Service = {
   id: ServiceId;
@@ -11,6 +11,7 @@ export type Service = {
   title: string;
   shortTitle: string;
   eyebrow: string;
+  tagline: string;
   summary: string;
   description: string;
   cta: { label: string; href: string };
@@ -25,11 +26,12 @@ export const services: Service[] = [
     href: "/photography",
     title: "Dance Photography",
     shortTitle: "Photography",
-    eyebrow: "Photography",
+    eyebrow: "Dance Photography",
+    tagline: "We don't capture dancers. We capture the art they leave behind.",
     summary:
-      "Performance photography, portrait sessions, and event coverage that capture abhinaya, energy, and expression.",
+      "Dance photography that captures expression, movement, emotion, and every moment worth reliving—from rehearsals to standing ovations.",
     description:
-      "Every dance form has a thousand small moments most cameras miss — the breath before a jump, the exact frame where abhinaya turns into emotion, the split second a guru's eyes soften watching their student. That's what we shoot for.",
+      "Dance photography that captures expression, movement, emotion, and every moment worth reliving—from rehearsals to standing ovations.",
     cta: { label: "Book a Shoot", href: "/contact?service=photo" },
     highlights: [
       "Performance Photography",
@@ -45,11 +47,12 @@ export const services: Service[] = [
     href: "/videography",
     title: "Dance Videography",
     shortTitle: "Videography",
-    eyebrow: "Videography",
+    eyebrow: "Dance Videography",
+    tagline: "Every performance deserves an encore.",
     summary:
-      "Performance films, highlight reels, and multi-camera coverage that preserve rhythm, abhinaya, and stage energy in motion.",
+      "Cinematic dance videography, performance films, highlight reels, and event coverage that keep your art moving long after the curtain falls.",
     description:
-      "Still frames freeze a moment. Video lets your audience feel the journey — the opening namaskaram, the build of a jathi, the silence after the last pose. We film classical dance with the same artistic eye as our photography: timing that respects the music, framing that honours abhinaya, and edits that feel like the performance itself.",
+      "Cinematic dance videography, performance films, highlight reels, and event coverage that keep your art moving long after the curtain falls.",
     cta: { label: "Book Videography", href: "/contact?service=video" },
     highlights: [
       "Performance & Recital Films",
@@ -64,13 +67,14 @@ export const services: Service[] = [
   {
     id: "websites&portfolios",
     href: "/websites",
-    title: "Artist Portfolio Websites",
+    title: "Portfolio Websites",
     shortTitle: "Portfolio Websites",
     eyebrow: "Portfolio Websites",
+    tagline: "Your talent deserves more than a Link in Bio.",
     summary:
-      "Custom portfolio websites for dancers, choreographers, and gurus — built to showcase your journey the way it deserves to be seen.",
+      "Beautiful portfolio websites for dancers, choreographers, teachers, and artists—designed to showcase your journey and help people discover your work.",
     description:
-      "A proper portfolio website means event organizers, students, and collaborators find you and understand your work in one visit — no scrolling through 400 Instagram posts to figure out what you do.",
+      "Beautiful portfolio websites for dancers, choreographers, teachers, and artists—designed to showcase your journey and help people discover your work.",
     cta: { label: "Build My Portfolio", href: "/contact?service=web" },
     highlights: [
       "Custom design reflecting your artistic identity",
@@ -85,13 +89,14 @@ export const services: Service[] = [
   {
     id: "social-media",
     href: "/social-media",
-    title: "Social Media for Artists",
+    title: "Social Media",
     shortTitle: "Social Media",
     eyebrow: "Social Media",
+    tagline: "Turn every scroll into a front-row seat.",
     summary:
-      "Branded content systems, reels, and event promotion that help dancers and academies show up consistently — without looking generic.",
+      "Reels, posters, event promotions, and branded social media content that keeps your audience engaged before and after every performance.",
     description:
-      "Your Instagram should feel like your stage presence, not a random feed of phone clips. We build social media systems for performing artists — visual direction, reels and stills around shows and classes, and campaign kits for arangetrams and festivals — so students and organisers recognise your art the moment they land on your profile.",
+      "Reels, posters, event promotions, and branded social media content that keeps your audience engaged before and after every performance.",
     cta: { label: "Plan My Content", href: "/contact?service=social" },
     highlights: [
       "Instagram Branding & Grid Direction",
@@ -106,13 +111,14 @@ export const services: Service[] = [
   {
     id: "invitations&creatives",
     href: "/invitations",
-    title: "Invitation & Event Poster Design",
+    title: "Invitation & Creatives",
     shortTitle: "Design Studio",
     eyebrow: "Design Studio",
+    tagline: "The first applause begins with great design.",
     summary:
-      "Invitations and posters that carry the same emotion as your performance — rooted in classical aesthetics, sharp enough for a WhatsApp forward and a printed card both.",
+      "Elegant invitation designs, event posters, and creative branding for arangetrams, rangapraveshas, recitals, and cultural events.",
     description:
-      "We design invitations and posters that carry the same emotion as your performance — rooted in classical aesthetics, but sharp enough for a WhatsApp forward and a printed card both.",
+      "Elegant invitation designs, event posters, and creative branding for arangetrams, rangapraveshas, recitals, and cultural events.",
     cta: { label: "Design My Invitation", href: "/contact?service=invite" },
     highlights: [
       "Arangetram & Recital Invitations",

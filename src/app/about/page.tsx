@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/shared/PageHero";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { Button } from "@/components/shared/Button";
@@ -10,56 +9,68 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "We're not photographers who learned dance. We're dancers who picked up a camera. Alekhya Studio — dance photography, invitation design, and portfolio websites in Bangalore.",
+    "Founded by a dancer, choreographer, photographer, and designer, Alekhya Studio brings every creative service under one artistic vision.",
 };
 
 export default function AboutPage() {
-  const person = about.team[0];
-
   return (
     <>
       <PageHero
         eyebrow="About"
-        title={about.headline}
-        description="One artist understanding another — building every visual moment of your journey with the same care you bring to the stage."
+        title="About Alekhya Studio"
+        description="Artists creating for artists—bringing your performances, milestones, and creative journey to life through photography, films, design, and digital experiences."
       />
 
       <section className="px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-14 lg:gap-20">
-          <div>
-            <FadeIn>
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">
-                The studio story
-              </p>
-              <div className="mt-4 space-y-4 text-lg leading-relaxed text-charcoal-muted">
-                {about.story.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </FadeIn>
+        <div className="mx-auto max-w-3xl">
+          <FadeIn>
+            <div className="space-y-6 text-lg leading-relaxed text-charcoal-muted">
+              {about.intro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </FadeIn>
 
-            <FadeIn className="mt-14">
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">
-                How we work
-              </p>
-              <ul className="mt-6 space-y-6">
-                {about.philosophy.map((item) => (
-                  <li key={item.title} className="border-l-2 border-teal/40 pl-5">
-                    <h2 className="font-display text-2xl text-charcoal">
-                      {item.title}
-                    </h2>
-                    <p className="mt-1 text-charcoal-muted">{item.text}</p>
-                  </li>
-                ))}
-              </ul>
-            </FadeIn>
+          <FadeIn>
+            <p className="mt-10 font-display text-3xl leading-snug text-charcoal md:text-4xl">
+              {about.headline}
+            </p>
+          </FadeIn>
 
-            <FadeIn className="mt-10">
-              <Button href="/contact" variant="primary">
-                Start a Project
-              </Button>
-            </FadeIn>
-          </div>
+          <FadeIn>
+            <div className="mt-10 space-y-6 text-lg leading-relaxed text-charcoal-muted">
+              {about.story.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </FadeIn>
+
+          <FadeIn className="mt-16">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta">
+              How We Work
+            </p>
+            <ul className="mt-6 space-y-8">
+              {about.howWeWork.map((item) => (
+                <li key={item.title} className="border-l-2 border-teal/40 pl-5">
+                  <h2 className="font-display text-2xl text-charcoal md:text-3xl">
+                    {item.title}
+                  </h2>
+                  <p className="mt-2 text-lg leading-relaxed text-charcoal-muted">
+                    {item.text}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-10 border-t border-charcoal/10 pt-8 font-display text-2xl leading-snug text-charcoal md:text-3xl">
+              {about.closing}
+            </p>
+          </FadeIn>
+
+          <FadeIn className="mt-12">
+            <Button href="/contact" variant="primary">
+              Start a Project
+            </Button>
+          </FadeIn>
         </div>
       </section>
 

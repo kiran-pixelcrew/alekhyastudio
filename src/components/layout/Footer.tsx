@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { photographyItems } from "@/data/photography";
 import { footerLinks, site } from "@/data/site";
+import { workPhotographyItems } from "@/data/work";
 import { withBustedSrc } from "@/lib/publicAsset";
 
-const feed = withBustedSrc(photographyItems.slice(0, 6));
+const feed = withBustedSrc(workPhotographyItems.slice(0, 6));
 
 export function Footer() {
   return (
@@ -15,47 +15,49 @@ export function Footer() {
       />
 
       <div className="relative mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
-        <div className="mb-12">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta-soft">
-                Studio feed
-              </p>
-              <h2 className="mt-2 font-display text-3xl text-cream-soft">
-                {site.tagline}
-              </h2>
+        {feed.length > 0 ? (
+          <div className="mb-12">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.22em] text-terracotta-soft">
+                  Studio feed
+                </p>
+                <h2 className="mt-2 font-display text-3xl text-cream-soft">
+                  {site.tagline}
+                </h2>
+              </div>
+              <a
+                href={site.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-cream/70 underline-offset-4 transition hover:text-cream hover:underline"
+              >
+                Instagram
+              </a>
             </div>
-            <a
-              href={site.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-cream/70 underline-offset-4 transition hover:text-cream hover:underline"
-            >
-              Instagram
-            </a>
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 md:gap-3">
+              {feed.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    href="/work"
+                    className="img-zoom group relative block aspect-square overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 16vw"
+                      className="object-cover"
+                      loading="lazy"
+                      unoptimized={item.src.startsWith("/images/")}
+                    />
+                    <span className="absolute inset-0 bg-teal/0 transition group-hover:bg-teal/25" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 md:gap-3">
-            {feed.map((item) => (
-              <li key={item.id}>
-                <Link
-                  href="/work"
-                  className="img-zoom group relative block aspect-square overflow-hidden"
-                >
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 16vw"
-                    className="object-cover"
-                    loading="lazy"
-                    unoptimized={item.src.startsWith("/images/")}
-                  />
-                  <span className="absolute inset-0 bg-teal/0 transition group-hover:bg-teal/25" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        ) : null}
 
         <div className="grid gap-10 border-t border-cream/10 pt-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>

@@ -6,6 +6,8 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { getHeroSlides } from "@/data/hero";
 
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   const heroSlides = getHeroSlides();
 

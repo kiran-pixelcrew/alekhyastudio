@@ -71,6 +71,22 @@ const studioHero: PhotoItem[] = [
     aspect: "landscape",
   },
   {
+    id: "s6",
+    title: "Dramatic Stage",
+    category: "stage",
+    alt: "Classical dance performance under dramatic stage lighting",
+    src: "/images/hero/img6.webp",
+    aspect: "landscape",
+  },
+  {
+    id: "s7",
+    title: "Stage Ensemble",
+    category: "arangetram",
+    alt: "Ensemble of dancers performing on stage",
+    src: "/images/hero/img7.webp",
+    aspect: "landscape",
+  },
+  {
     id: "sm1",
     title: "Stage Portrait I",
     category: "stage",
@@ -105,7 +121,6 @@ const studioHero: PhotoItem[] = [
 ];
 
 export const photographyItems: PhotoItem[] = [
-  ...studioHero,
   {
     id: "p3",
     title: "First Stage",
@@ -235,3 +250,6 @@ export const photographyItems: PhotoItem[] = [
     aspect: "landscape",
   },
 ];
+
+/** Hero-only assets — not used in Our Work. */
+export { studioHero };

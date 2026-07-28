@@ -1,8 +1,11 @@
 import { existsSync, statSync } from "fs";
 import { join } from "path";
+import { unstable_noStore as noStore } from "next/cache";
 
-/** Append file mtime so replaced public assets bust browser/Next caches. Server-only. */
+/** Append file mtime+size so replaced public assets bust browser/Next caches. Server-only. */
 export function publicAsset(path: string): string {
+  noStore();
+
   if (!path.startsWith("/") || path.startsWith("//") || path.includes("://")) {
     return path;
   }
@@ -11,8 +14,9 @@ export function publicAsset(path: string): string {
     const relative = path.split("?")[0].replace(/^\//, "");
     const full = join(process.cwd(), "public", relative);
     if (!existsSync(full)) return path;
-    const mtime = Math.floor(statSync(full).mtimeMs);
-    return `${path.split("?")[0]}?v=${mtime}`;
+    const stats = statSync(full);
+    const stamp = `${Math.floor(stats.mtimeMs)}-${stats.size}`;
+    return `${path.split("?")[0]}?v=${stamp}`;
   } catch {
     return path;
   }

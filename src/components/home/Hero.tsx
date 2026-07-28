@@ -101,11 +101,11 @@ export function Hero({ slides }: HeroProps) {
       </div>
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-20 pt-28 md:px-8 md:pb-28">
-        <p className="mb-4 max-w-xl text-xs font-medium uppercase tracking-[0.22em] text-cream/70">
+        <p className="mb-4 max-w-xl text-nowrap text-xs font-medium uppercase tracking-[0.22em] text-cream/70">
           {heroContent.eyebrow}
         </p>
-        <h1 className="max-w-4xl font-display text-4xl leading-[1.05] text-cream-soft font-semibold sm:text-5xl md:text-6xl lg:text-7xl">
-          {heroContent.headline}
+        <h1 className="max-w-7xl text-nowrap font-display text-5xl leading-[1.05] text-cream-soft font-semibold sm:text-6xl md:text-7xl lg:text-8xl">
+          You Dance. <p className="text-button-soft">We Make It Look Unforgettable.</p>
         </h1>
         <p className="mt-5 max-w-2xl text-base text-cream/80 md:text-lg">
           {heroContent.subheadline}

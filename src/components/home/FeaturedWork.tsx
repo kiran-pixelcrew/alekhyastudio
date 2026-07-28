@@ -10,6 +10,8 @@ import { withBustedSrc } from "@/lib/publicAsset";
 export function FeaturedWork() {
   const items = withBustedSrc(featuredWork);
 
+  if (items.length === 0) return null;
+
   return (
     <section className="px-5 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-7xl">

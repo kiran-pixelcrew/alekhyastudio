@@ -10,13 +10,19 @@ export function WhyAlekhya() {
           <SectionHeading
             eyebrow={whyAlekhya.eyebrow}
             title={whyAlekhya.title}
+            description={whyAlekhya.description}
           />
         </FadeIn>
         <ul className="mt-12 grid gap-8 md:grid-cols-3">
           {whyAlekhya.points.map((point, i) => (
-            <FadeIn key={point} delay={i * 80}>
+            <FadeIn key={point.title} delay={i * 80}>
               <li className="border-l-2 border-terracotta/50 pl-5">
-                <p className="text-charcoal-muted leading-relaxed">{point}</p>
+                <h3 className="font-display text-2xl text-charcoal">
+                  {point.title}
+                </h3>
+                <p className="mt-3 text-charcoal-muted leading-relaxed">
+                  {point.text}
+                </p>
               </li>
             </FadeIn>
           ))}

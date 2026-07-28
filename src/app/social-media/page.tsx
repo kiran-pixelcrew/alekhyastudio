@@ -20,7 +20,7 @@ export default function SocialMediaPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Your feed should feel like your stage — not a generic template."
+        title={service.tagline}
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">

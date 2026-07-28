@@ -20,7 +20,7 @@ export default function InvitationsPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="Your show deserves an invitation people actually want to open."
+        title={service.tagline}
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">

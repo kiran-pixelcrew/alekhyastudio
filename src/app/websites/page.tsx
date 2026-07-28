@@ -24,7 +24,7 @@ export default function WebsitesPage() {
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="You've spent years building your art. Your website shouldn't look like it took ten minutes."
+        title={service.tagline}
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">
