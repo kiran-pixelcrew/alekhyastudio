@@ -21,6 +21,8 @@ type ContactFormProps = {
 
 export function ContactForm({ defaultServices = [] }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedServices, setSelectedServices] = useState<ContactService[]>(
     defaultServices,
   );
@@ -33,9 +35,46 @@ export function ContactForm({ defaultServices = [] }: ContactFormProps) {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSubmitting(true);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(formData.get("name") ?? "").trim(),
+          email: String(formData.get("email") ?? "").trim(),
+          services: selectedServices,
+          eventDate: String(formData.get("event-date") ?? "").trim() || undefined,
+          about: String(formData.get("about") ?? "").trim(),
+          instagram: String(formData.get("instagram") ?? "").trim() || undefined,
+        }),
+      });
+
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Unable to send your message.");
+      }
+
+      setSubmitted(true);
+      form.reset();
+      setSelectedServices([]);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Unable to send your message.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -55,6 +94,15 @@ export function ContactForm({ defaultServices = [] }: ContactFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      {error ? (
+        <p
+          role="alert"
+          className="rounded-sm border border-terracotta/30 bg-terracotta/5 px-4 py-3 text-sm text-charcoal"
+        >
+          {error}
+        </p>
+      ) : null}
+
       <Field label="Name" id="name" required>
         <input
           id="name"
@@ -63,6 +111,18 @@ export function ContactForm({ defaultServices = [] }: ContactFormProps) {
           autoComplete="name"
           className={fieldClass}
           placeholder="Your name"
+        />
+      </Field>
+
+      <Field label="Email" id="email" required>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          className={fieldClass}
+          placeholder="you@example.com"
         />
       </Field>
 
@@ -124,8 +184,14 @@ export function ContactForm({ defaultServices = [] }: ContactFormProps) {
         />
       </Field>
 
-      <Button type="submit" variant="primary" size="lg" className="w-full sm:w-auto">
-        Send It Over
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        className="w-full sm:w-auto"
+        disabled={submitting}
+      >
+        {submitting ? "Sending..." : "Send It Over"}
       </Button>
     </form>
   );

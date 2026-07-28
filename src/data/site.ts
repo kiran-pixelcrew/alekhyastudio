@@ -48,18 +48,18 @@ export const threeCrafts = {
       cta: { label: "Explore Photography", href: "/photography" },
     },
     {
-      title: "Invitation & Event Poster Design",
-      tagline: "The first impression of your show, before the show even begins.",
-      description:
-        "Elegant, culturally rooted invitation and poster designs for arangetrams, recitals, and festivals — designed to be shared, saved, and remembered.",
-      cta: { label: "See Design Work", href: "/invitations" },
-    },
-    {
       title: "Artist Portfolio Websites",
       tagline: 'Because "DM me for my portfolio" isn\'t a portfolio.',
       description:
         "Clean, personal websites for dancers, choreographers, and gurus — built to showcase your journey the way it deserves to be seen.",
       cta: { label: "View Portfolio Sites", href: "/websites" },
+    },
+    {
+      title: "Invitation & Event Poster Design",
+      tagline: "The first impression of your show, before the show even begins.",
+      description:
+        "Elegant, culturally rooted invitation and poster designs for arangetrams, recitals, and festivals — designed to be shared, saved, and remembered.",
+      cta: { label: "See Design Work", href: "/invitations" },
     },
   ],
 } as const;
