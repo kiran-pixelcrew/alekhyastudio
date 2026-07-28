@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/shared/PageHero";
 import { Button } from "@/components/shared/Button";
 import { FadeIn } from "@/components/shared/FadeIn";
@@ -11,11 +10,9 @@ import {
 } from "@/components/web/WebSections";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { getService } from "@/data/services";
-import { pastSites } from "@/data/web";
 import { site } from "@/data/site";
-import { withBustedSrc } from "@/lib/publicAsset";
 
-const service = getService("websites");
+const service = getService("websites&portfolios");
 
 export const metadata: Metadata = {
   title: service.seoTitle,
@@ -23,8 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default function WebsitesPage() {
-  const sites = withBustedSrc(pastSites);
-
   return (
     <>
       <PageHero
@@ -36,80 +31,41 @@ export default function WebsitesPage() {
           <Button href={service.cta.href} variant="primary" size="lg">
             {service.cta.label}
           </Button>
-          <Button href={site.whatsapp} external variant="secondary" size="lg">
-            WhatsApp
+          <Button href="/work" variant="secondary" size="lg">
+            See Our Work
           </Button>
         </div>
       </PageHero>
 
-      <section className="px-5 py-12 md:px-8">
-        <FadeIn className="mx-auto max-w-7xl">
-          <SectionHeading
-            eyebrow="What's included"
-            title="A portfolio that works as hard as you do"
-          />
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2">
-            {service.highlights.map((item) => (
-              <li
-                key={item}
-                className="border border-charcoal/10 bg-cream-soft p-6"
-              >
-                <p className="text-charcoal-muted">{item}</p>
-              </li>
-            ))}
-          </ul>
-        </FadeIn>
-      </section>
-
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl space-y-20">
-          <div>
-            <FadeIn>
-              <SectionHeading
-                eyebrow="Sample sites"
-                title="Portfolio websites & case studies"
-                description="For dancers, choreographers, gurus, and dance schools."
-              />
-            </FadeIn>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {sites.map((item, i) => (
-                <FadeIn key={item.id} delay={i * 70}>
-                  <article>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group block"
-                    >
-                      <div className="img-zoom relative aspect-[16/10] overflow-hidden">
-                        <Image
-                          src={item.src}
-                          alt={item.alt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover object-top"
-                          loading="lazy"
-                          unoptimized
-                        />
-                      </div>
-                      <p className="mt-3 text-xs uppercase tracking-[0.16em] text-charcoal-muted">
-                        {item.category}
-                      </p>
-                      <h3 className="font-display text-2xl text-charcoal transition group-hover:text-terracotta">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-charcoal-muted">
-                        {item.description}
-                      </p>
-                      <p className="mt-2 text-sm font-medium text-teal">
-                        Visit site →
-                      </p>
-                    </a>
-                  </article>
-                </FadeIn>
+          <FadeIn>
+            <SectionHeading
+              eyebrow="What's included"
+              title="A portfolio that works as hard as you do"
+              description="Custom websites for dancers, choreographers, gurus, and academies — built to showcase your journey and make enquiries easy."
+            />
+            <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+              {service.highlights.map((item) => (
+                <li
+                  key={item}
+                  className="border border-charcoal/10 bg-cream-soft p-6"
+                >
+                  <p className="text-charcoal-muted">{item}</p>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+            <p className="mt-10 max-w-2xl text-charcoal-muted leading-relaxed">
+              Browse live portfolio websites we&apos;ve built in{" "}
+              <a
+                href="/work"
+                className="font-medium text-button underline-offset-4 hover:underline"
+              >
+                Our Work
+              </a>
+              .
+            </p>
+          </FadeIn>
 
           <div>
             <FadeIn>

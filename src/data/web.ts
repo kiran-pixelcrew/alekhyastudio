@@ -37,14 +37,14 @@ export const techStack = [
 
 export const pastSites = [
   {
-    id: "w1",
-    title: "Vastraa",
-    category: "Costume & wardrobe",
+    id: "w3",
+    title: "Gaana Nritya Academy",
+    category: "Dance academy",
     description:
-      "A refined digital home for costume rental and styling — clear browsing and enquiry paths.",
-    href: "https://www.vastraa.in/",
-    src: "/images/websites/vastraa.webp",
-    alt: "Screenshot of the Vastraa website homepage",
+      "Academy website for classical dance training, performances, and student enquiries.",
+    href: "https://www.gaananrityaacademy.org/",
+    src: "/images/websites/gaananritya.webp",
+    alt: "Screenshot of the Gaana Nritya Academy website",
   },
   {
     id: "w2",
@@ -57,14 +57,14 @@ export const pastSites = [
     alt: "Screenshot of the Shivaleela Cultural Trust website",
   },
   {
-    id: "w3",
-    title: "Gaana Nritya Academy",
-    category: "Dance academy",
+    id: "w1",
+    title: "Vastraa",
+    category: "Costume & wardrobe",
     description:
-      "Academy website for classical dance training, performances, and student enquiries.",
-    href: "https://www.gaananrityaacademy.org/",
-    src: "/images/websites/gaananritya.webp",
-    alt: "Screenshot of the Gaana Nritya Academy website",
+      "A refined digital home for costume rental and styling — clear browsing and enquiry paths.",
+    href: "https://www.vastraa.in/",
+    src: "/images/websites/vastraa.webp",
+    alt: "Screenshot of the Vastraa website homepage",
   },
 ];
 

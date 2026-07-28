@@ -57,9 +57,6 @@ export function FeaturedWork() {
                     loading="lazy"
                     unoptimized={item.src.startsWith("/images/")}
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal/75 to-transparent p-4 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
-                    <p className="text-sm text-cream-soft">{item.title}</p>
-                  </div>
                 </Link>
               </FadeIn>
             );

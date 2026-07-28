@@ -7,19 +7,19 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { getService } from "@/data/services";
 import { site } from "@/data/site";
 
-const service = getService("photography");
+const service = getService("videography");
 
 export const metadata: Metadata = {
   title: service.seoTitle,
   description: service.seoDescription,
 };
 
-export default function PhotographyPage() {
+export default function VideographyPage() {
   return (
     <>
       <PageHero
         eyebrow={service.eyebrow}
-        title="We don't wait for the pose. We wait for the feeling."
+        title="Your performance deserves to live beyond the night it happened."
         description={service.description}
       >
         <div className="flex flex-wrap gap-3">
@@ -35,11 +35,11 @@ export default function PhotographyPage() {
       <section className="px-5 py-16 md:px-8 md:py-24">
         <FadeIn className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="What we shoot"
-            title="Performance, portraits, and sabha coverage"
-            description="We photograph Indian classical dance with the eye of someone who understands the art form — waiting for abhinaya, timing, and the moments that make a performance memorable."
+            eyebrow="What we film"
+            title="Performance films, reels, and stage coverage"
+            description="We film Indian classical dance with cultural fluency — respecting music, mudra, and stage geography so the final cut feels true to the performance."
           />
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
             {service.highlights.map((item) => (
               <li
                 key={item}
@@ -50,9 +50,10 @@ export default function PhotographyPage() {
             ))}
           </ul>
           <p className="mt-10 max-w-2xl text-charcoal-muted leading-relaxed">
-            From arangetrams and recitals to studio portraits and concept
-            shoots, we capture your art with care and cultural fluency. Browse
-            our photography in{" "}
+            Whether you need a full recital film, a short show trailer, or
+            multi-camera coverage for an arangetram, we plan angles and edits
+            around your art form — not generic event videography. Browse related
+            work in{" "}
             <a
               href="/work"
               className="font-medium text-button underline-offset-4 hover:underline"
@@ -73,10 +74,10 @@ export default function PhotographyPage() {
       </section>
 
       <CTABanner
-        title="Planning an arangetram or recital?"
-        description="Book photography and pair it with invitation design — one studio, one vision."
-        primary={{ href: "/contact?service=photo", label: "Book a Shoot" }}
-        secondary={{ href: "/work", label: "View photography work" }}
+        title="Want your next show on film?"
+        description="Tell us the date, venue, and art form — we'll recommend a coverage plan that fits the evening."
+        primary={{ href: "/contact?service=video", label: "Book Videography" }}
+        secondary={{ href: "/photography", label: "Add photography" }}
       />
     </>
   );

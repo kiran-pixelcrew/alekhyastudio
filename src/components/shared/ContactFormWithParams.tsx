@@ -6,8 +6,10 @@ import { ContactForm, type ContactService } from "./ContactForm";
 
 const serviceMap: Record<string, ContactService> = {
   photo: "Photography",
+  video: "Videography",
   invite: "Invitation / Poster",
   web: "Portfolio Website",
+  social: "Social Media",
 };
 
 function FormInner() {

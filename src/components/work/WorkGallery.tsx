@@ -17,6 +17,7 @@ type WorkGalleryProps = {
 export function WorkGallery({ items }: WorkGalleryProps) {
   const [active, setActive] = useState<WorkCategory>("photography");
   const useBento = active === "photography";
+  const isInvitations = active === "invitations&creatives";
 
   const filtered = useMemo(
     () => items.filter((item) => item.category === active),
@@ -56,7 +57,9 @@ export function WorkGallery({ items }: WorkGalleryProps) {
         className={
           useBento
             ? "bento-grid"
-            : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            : isInvitations
+              ? "grid grid-cols-1 justify-items-center"
+              : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         }
       >
         {filtered.map((item, index) => {
@@ -65,11 +68,9 @@ export function WorkGallery({ items }: WorkGalleryProps) {
             ? getFeaturedBentoClass(index, filtered.length, item.aspect)
             : "";
           const imageClass = useBento
-            ? getBentoImageClass(spanClass, item.aspect, {
-                contain: isInvitation && filtered.length === 1,
-              })
+            ? getBentoImageClass(spanClass, item.aspect)
             : isInvitation
-              ? "aspect-[16/10] bg-charcoal/5"
+              ? "aspect-[32/15] bg-charcoal/5"
               : "aspect-[16/10]";
 
           return (
@@ -78,9 +79,7 @@ export function WorkGallery({ items }: WorkGalleryProps) {
               className={[
                 useBento ? "bento-item" : undefined,
                 spanClass || undefined,
-                useBento && isInvitation && filtered.length === 1
-                  ? "mx-auto w-full max-w-5xl"
-                  : undefined,
+                isInvitation ? "w-full max-w-5xl" : undefined,
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -100,34 +99,35 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                     alt={item.alt}
                     fill
                     sizes={
-                      useBento
-                        ? spanClass.includes("featured") ||
-                          spanClass.includes("wide")
-                          ? "(max-width: 1024px) 100vw, 50vw"
-                          : "(max-width: 768px) 100vw, 25vw"
-                        : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      isInvitation
+                        ? "(max-width: 1024px) 100vw, 1024px"
+                        : useBento
+                          ? spanClass.includes("featured") ||
+                            spanClass.includes("wide")
+                            ? "(max-width: 1024px) 100vw, 50vw"
+                            : "(max-width: 768px) 100vw, 25vw"
+                          : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     }
                     className={
-                      isInvitation && !useBento
+                      isInvitation
                         ? "object-contain"
                         : "object-cover object-top"
                     }
                     loading="lazy"
                     unoptimized={item.src.startsWith("/images/")}
                   />
-                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent p-4 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
-                    <p className="text-sm text-cream-soft">{item.title}</p>
-                    {item.href ? (
+                  {item.href ? (
+                    <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-charcoal/70 via-transparent to-transparent pb-5 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
                       <a
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-3 inline-flex w-fit items-center justify-center rounded-sm bg-button px-4 py-2 text-sm font-medium text-cream-soft transition hover:bg-button-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button"
+                        className="inline-flex items-center justify-center rounded-sm bg-button px-5 py-2.5 text-sm font-medium text-cream-soft transition hover:bg-button-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button"
                       >
-                        Visit
+                        Visit Website
                       </a>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                 </div>
               </article>
             </li>

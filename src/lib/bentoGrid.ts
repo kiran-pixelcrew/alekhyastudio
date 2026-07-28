@@ -38,19 +38,12 @@ export function getBentoImageClass(
   options?: { contain?: boolean },
 ) {
   if (options?.contain) {
-    return "h-full min-h-[220px] bg-charcoal/5";
+    return "h-full min-h-full bg-charcoal/5";
   }
 
-  if (spanClass.includes("featured")) {
-    return "h-full min-h-[280px] sm:min-h-[420px]";
-  }
-
-  if (spanClass.includes("tall")) {
-    return "h-full min-h-[320px] sm:min-h-[460px]";
-  }
-
-  if (spanClass.includes("wide")) {
-    return "h-full min-h-[220px] sm:min-h-[260px]";
+  // Bento tiles always fill their grid cell so the mosaic stays tight.
+  if (spanClass) {
+    return "h-full min-h-full";
   }
 
   if (aspect === "portrait") {
@@ -63,6 +56,15 @@ export function getBentoImageClass(
 
   return "aspect-[4/3]";
 }
+
+const photographyPattern = [
+  "bento-span-featured",
+  "bento-span-default",
+  "bento-span-tall",
+  "bento-span-wide",
+  "bento-span-default",
+  "bento-span-default",
+] as const;
 
 const featuredLayouts: Record<number, string[]> = {
   4: [
@@ -96,6 +98,11 @@ export function getFeaturedBentoClass(
   const layout = featuredLayouts[total];
   if (layout?.[index]) {
     return layout[index];
+  }
+
+  // Photography (and other longer lists): repeat a tight mosaic pattern.
+  if (total > 6) {
+    return photographyPattern[index % photographyPattern.length];
   }
 
   return getBentoItemClass({

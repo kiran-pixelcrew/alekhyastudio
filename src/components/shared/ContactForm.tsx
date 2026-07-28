@@ -5,8 +5,10 @@ import { Button } from "./Button";
 
 export const contactServices = [
   "Photography",
+  "Videography",
   "Invitation / Poster",
   "Portfolio Website",
+  "Social Media",
   "Not Sure Yet",
 ] as const;
 

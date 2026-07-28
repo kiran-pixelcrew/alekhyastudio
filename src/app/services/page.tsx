@@ -10,7 +10,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Dance photography, invitation & poster design, and portfolio websites for dancers, choreographers, and artists — by Alekhya Studio.",
+    "Dance photography, videography, invitation design, social media, and portfolio websites for dancers, choreographers, and artists — by Alekhya Studio.",
 };
 
 export default function ServicesPage() {
@@ -18,8 +18,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="Three crafts. One artistic eye."
-        description="Photography, invitations, and portfolio websites — all made by people who actually understand abhinaya, adavus, and why your entry pose matters."
+        title="One artistic eye. Every output your art needs."
+        description="Photography, videography, invitations, social media, and portfolio websites — all made by people who actually understand abhinaya, adavus, and why your entry pose matters."
       >
         <Button href="/contact" variant="primary" size="lg">
           Start a Project

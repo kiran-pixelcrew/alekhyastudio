@@ -15,7 +15,7 @@ export function ServicesOverview() {
           />
         </FadeIn>
 
-        <ul className="mt-14 grid gap-8 md:grid-cols-3">
+        <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {threeCrafts.cards.map((card, i) => (
             <FadeIn key={card.title} delay={i * 60}>
               <li className="flex h-full flex-col border border-charcoal/10 bg-cream-soft p-8">
