@@ -19,7 +19,7 @@ export const heroContent = {
   eyebrow: "Dance Photography · Videography · Invitation & Creatives · Artistic Portfolio Websites · Social Media",
   headline: "",
   subheadline:
-    "Alekhya Studio is a crew of artistic eyes — we shoot your performances, design your invitations and event posters, and build portfolio websites that don't embarrass you in front of a sabha committee.",
+    "From designing your invitation to capturing your performance, building your portfolio or creating your website — everything comes together seamlessly, under one creative roof.",
   primaryCta: { label: "Start Your Creative Journey →", href: "/contact" },
   secondaryCta: { label: "Explore Our Work", href: "/work" },
 } as const;

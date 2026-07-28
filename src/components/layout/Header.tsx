@@ -13,9 +13,19 @@ export function Header() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
   const isHome = pathname === "/";
-  const solid = !isHome || scrolled || open;
+  // Home mobile hero is light/stacked, so keep the header solid there.
+  const solid = !isHome || scrolled || open || isMobile;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const isServiceActive = serviceNavLinks.some(
     (link) =>
