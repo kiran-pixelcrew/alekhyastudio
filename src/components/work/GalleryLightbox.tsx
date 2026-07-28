@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import type { WorkItem } from "@/data/work";
+import { ImageWatermark } from "@/components/shared/ImageWatermark";
 
 type GalleryLightboxProps = {
   items: WorkItem[];
@@ -106,6 +107,7 @@ export function GalleryLightbox({
           unoptimized={item.src.startsWith("/images/")}
           priority
         />
+        <ImageWatermark className="bottom-4 right-4 md:bottom-6 md:right-6 opacity-70" />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { Button } from "@/components/shared/Button";
 import { featuredWork } from "@/data/work";
 import { getBentoImageClass, getFeaturedBentoClass } from "@/lib/bentoGrid";
 import { withBustedSrc } from "@/lib/publicAsset";
+import { ImageWatermark } from "@/components/shared/ImageWatermark";
 
 export function FeaturedWork() {
   const items = withBustedSrc(featuredWork);
@@ -59,6 +60,7 @@ export function FeaturedWork() {
                     loading="lazy"
                     unoptimized={item.src.startsWith("/images/")}
                   />
+                  <ImageWatermark />
                 </Link>
               </FadeIn>
             );

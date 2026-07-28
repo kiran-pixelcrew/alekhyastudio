@@ -8,6 +8,7 @@ import {
   type WorkItem,
 } from "@/data/work";
 import { Button } from "@/components/shared/Button";
+import { ImageWatermark } from "@/components/shared/ImageWatermark";
 import { getBentoImageClass, getFeaturedBentoClass } from "@/lib/bentoGrid";
 import { GalleryLightbox } from "@/components/work/GalleryLightbox";
 
@@ -128,17 +129,22 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                       loading="lazy"
                       unoptimized={item.src.startsWith("/images/")}
                     />
+                    {!isInvitation ? <ImageWatermark /> : null}
                     <span className="pointer-events-none absolute inset-0 bg-charcoal/0 transition group-hover:bg-charcoal/15" />
                   </button>
                 ) : (
-                  <div
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={[
-                      "img-zoom relative overflow-hidden",
+                      "img-zoom relative block overflow-hidden",
                       useBento ? "h-full" : undefined,
                       imageClass,
                     ]
                       .filter(Boolean)
                       .join(" ")}
+                    aria-label={`Visit ${item.title} website`}
                   >
                     <Image
                       src={item.src}
@@ -149,17 +155,13 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                       loading="lazy"
                       unoptimized={item.src.startsWith("/images/")}
                     />
-                    <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-charcoal/70 via-transparent to-transparent pb-5 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center rounded-sm bg-button px-5 py-2.5 text-sm font-medium text-cream-soft transition hover:bg-button-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button"
-                      >
+                    <ImageWatermark />
+                    <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent pb-5 opacity-100 transition md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
+                      <span className="inline-flex items-center justify-center rounded-sm bg-button px-5 py-2.5 text-sm font-medium text-cream-soft">
                         Visit Website
-                      </a>
+                      </span>
                     </div>
-                  </div>
+                  </a>
                 )}
               </article>
             </li>
