@@ -44,7 +44,7 @@ export function PricingTiers() {
             className={[
               "flex h-full flex-col border p-7",
               tier.highlighted
-                ? "border-terracotta bg-cream-soft shadow-[0_20px_50px_-30px_rgba(193,80,46,0.45)]"
+                ? "theme-gold-card-shadow border-terracotta bg-cream-soft"
                 : "border-charcoal/10 bg-cream",
             ].join(" ")}
           >

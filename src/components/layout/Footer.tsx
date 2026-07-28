@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="relative overflow-hidden bg-charcoal text-cream/80">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(193,80,46,0.18),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(31,75,74,0.35),transparent_45%)]"
+        className="theme-footer-glow pointer-events-none absolute inset-0"
       />
 
       <div className="relative mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">

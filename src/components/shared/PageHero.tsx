@@ -15,14 +15,10 @@ export function PageHero({
   children,
 }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(145deg,#2b2620_0%,#1f4b4a_55%,#3a2a24_100%)] px-5 pb-16 pt-32 md:px-8 md:pb-20 md:pt-40">
+    <section className="theme-page-hero relative overflow-hidden px-5 pb-16 pt-32 md:px-8 md:pb-20 md:pt-40">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 20%, rgba(193,80,46,0.35), transparent 35%), radial-gradient(circle at 80% 60%, rgba(245,237,225,0.08), transparent 40%)",
-        }}
+        className="theme-page-hero-glow pointer-events-none absolute inset-0 opacity-40"
       />
       <div className="relative mx-auto max-w-7xl">
         <FadeIn>

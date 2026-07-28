@@ -6,7 +6,7 @@ export function WhatsAppFloat() {
       href={site.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-sm bg-teal px-4 py-3 text-sm font-medium text-cream-soft shadow-[0_12px_30px_-12px_rgba(31,75,74,0.8)] transition hover:bg-teal-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta md:bottom-8 md:right-8"
+      className="theme-teal-float fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-sm bg-teal px-4 py-3 text-sm font-medium text-cream-soft transition hover:bg-teal-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta md:bottom-8 md:right-8"
       aria-label="Chat on WhatsApp"
     >
       <svg
