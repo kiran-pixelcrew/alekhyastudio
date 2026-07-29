@@ -82,12 +82,12 @@ export function Header() {
       ].join(" ")}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-8">
-        <Link
+        {/* <Link
           href="/"
           className="inline-flex items-center"
           aria-label={`${site.displayName} home`}
-        >
-          <Image
+        > */}
+          {/* <Image
             src={solid ? "/logo2.svg" : "/logo1.svg"}
             alt="Alekhya Studio"
             width={224}
@@ -95,8 +95,20 @@ export function Header() {
             className="h-7 w-auto md:h-8"
             priority
             unoptimized
-          />
+          /> */}
+          
+        <Link
+          href="/"
+          className={[
+            "font-display flex text-2xl tracking-tight transition-colors md:text-[1.7rem]",
+            solid ? "text-charcoal" : "text-cream-soft",
+          ].join(" ")}
+          aria-label={`${site.displayName} home`}
+        >
+          <Image src="/logo.png" alt="Alekhya Studio" width={100} height={100} className="h-10 w-auto md:h-10" />
+          Alekhya<span className="text-terracotta">Studio</span>
         </Link>
+        {/* </Link> */}
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           <div ref={servicesRef} className="relative">

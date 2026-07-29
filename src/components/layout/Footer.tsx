@@ -29,15 +29,17 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-16">
         <div className="grid gap-10 pt-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,0.7fr))] lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" aria-label={`${site.displayName} home`} className="inline-block">
-              <Image
+            <Link href="/" aria-label={`${site.displayName} home`} className="flex font-display text-2xl tracking-tight transition-colors md:text-[1.7rem] items-center gap-2">
+              {/* <Image
                 src="/logo1.svg"
                 alt="Alekhya Studio"
                 width={224}
                 height={32}
                 className="h-8 w-auto md:h-9"
                 unoptimized
-              />
+              /> */}
+              <Image src="/logo.png" alt="Alekhya Studio" width={100} height={100} className="h-10 w-auto md:h-10" />
+              Alekhya<span className="text-terracotta">Studio</span>
             </Link>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/65">
               {site.mission} Based in {site.location}. Dance photography,
