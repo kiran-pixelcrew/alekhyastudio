@@ -5,7 +5,7 @@ export const invitationProjects = [
     type: "Rangapravesha",
     description:
       "Custom Rangapravesha invitation design with portrait-led composition, warm green palette, and event details crafted for print and digital sharing.",
-    src: "/images/invitations/poorvi-rangapravesha.svg",
+    src: "/images/invitations/poorvi-rangapravesha.webp",
     alt: "Rangapravesha invitation featuring classical dancer portrait and event details",
   },
 ];
