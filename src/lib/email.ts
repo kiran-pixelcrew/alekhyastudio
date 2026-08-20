@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { site } from "@/data/site";
 
 export type ContactEmailPayload = {
@@ -9,24 +9,6 @@ export type ContactEmailPayload = {
   about: string;
   instagram?: string;
 };
-
-function getSmtpConfig() {
-  const host = process.env.SMTP_HOST ?? "smtp.gmail.com";
-  const port = Number(process.env.SMTP_PORT ?? "587");
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-
-  if (!user || !pass) {
-    throw new Error("SMTP credentials are not configured.");
-  }
-
-  return {
-    host,
-    port,
-    secure: port === 465,
-    auth: { user, pass },
-  };
-}
 
 function formatContactEmail(payload: ContactEmailPayload) {
   const services =
@@ -70,23 +52,37 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured.");
+  }
+  return new Resend(apiKey);
+}
+
+export function getContactFromAddress() {
+  return (
+    process.env.RESEND_FROM ??
+    `Alekhya Studio <onboarding@resend.dev>`
+  );
+}
+
 export async function sendContactEmail(payload: ContactEmailPayload) {
   const to = process.env.CONTACT_TO_EMAIL ?? site.email;
-  const from = process.env.SMTP_FROM ?? process.env.SMTP_USER;
-
-  if (!from) {
-    throw new Error("SMTP sender address is not configured.");
-  }
-
-  const transporter = nodemailer.createTransport(getSmtpConfig());
+  const from = getContactFromAddress();
+  const resend = getResendClient();
   const { text, html } = formatContactEmail(payload);
 
-  await transporter.sendMail({
+  const { error } = await resend.emails.send({
     from,
-    to,
+    to: [to],
     replyTo: payload.email,
     subject: `New inquiry from ${payload.name} · ${site.displayName}`,
     text,
     html,
   });
+
+  if (error) {
+    throw new Error(error.message || "Resend failed to send email.");
+  }
 }

@@ -100,7 +100,7 @@ export async function POST(request: Request) {
 
       await EmailLog.create({
         type: "contact",
-        fromEmail: process.env.SMTP_FROM ?? process.env.SMTP_USER ?? "",
+        fromEmail: process.env.RESEND_FROM ?? "",
         toEmail: to,
         replyTo: email,
         subject,
