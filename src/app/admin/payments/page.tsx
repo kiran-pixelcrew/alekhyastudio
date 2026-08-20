@@ -117,13 +117,21 @@ export default function AdminPaymentsPage() {
   }, [payments]);
 
   const bookingRows = useMemo(() => {
+    type PaymentState = "unpaid" | "partial" | "no_quote" | "paid";
+    const rank: Record<PaymentState, number> = {
+      unpaid: 0,
+      partial: 1,
+      no_quote: 2,
+      paid: 3,
+    };
+
     return bookings
       .filter((booking) => booking.status !== "cancelled")
       .map((booking) => {
         const quoted = booking.amountQuoted ?? 0;
         const paid = paidByBooking.get(booking._id) ?? 0;
         const remaining = Math.max(quoted - paid, 0);
-        const paymentState =
+        const paymentState: PaymentState =
           quoted <= 0 && paid <= 0
             ? "no_quote"
             : paid <= 0
@@ -133,10 +141,7 @@ export default function AdminPaymentsPage() {
                 : "paid";
         return { booking, quoted, paid, remaining, paymentState };
       })
-      .sort((a, b) => {
-        const rank = { unpaid: 0, partial: 1, no_quote: 2, paid: 3 } as const;
-        return rank[a.paymentState] - rank[b.paymentState];
-      });
+      .sort((a, b) => rank[a.paymentState] - rank[b.paymentState]);
   }, [bookings, paidByBooking]);
 
   function selectBooking(booking: Booking, suggestAmount?: number) {
