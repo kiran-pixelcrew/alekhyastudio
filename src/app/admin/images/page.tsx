@@ -231,6 +231,7 @@ export default function AdminImagesPage() {
                   src={image.secureUrl}
                   alt={image.alt || "Gallery image"}
                   fill
+                  unoptimized
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
