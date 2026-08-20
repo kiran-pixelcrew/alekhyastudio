@@ -4,8 +4,10 @@ import { Button } from "@/components/shared/Button";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { VideoShowcase } from "@/components/videography/VideoShowcase";
 import { getService } from "@/data/services";
 import { site } from "@/data/site";
+import { getSelectedVideos } from "@/lib/videos";
 
 const service = getService("videography");
 
@@ -14,7 +16,9 @@ export const metadata: Metadata = {
   description: service.seoDescription,
 };
 
-export default function VideographyPage() {
+export default async function VideographyPage() {
+  const videos = await getSelectedVideos();
+
   return (
     <>
       <PageHero
@@ -31,6 +35,21 @@ export default function VideographyPage() {
           </Button>
         </div>
       </PageHero>
+
+      {videos.length > 0 ? (
+        <section className="px-5 py-16 md:px-8 md:py-24">
+          <FadeIn className="mx-auto max-w-7xl">
+            <SectionHeading
+              eyebrow="On film"
+              title="Recent performance films"
+              description="Selected work from stages and studios — cinematic coverage that keeps the evening alive after the curtain."
+            />
+            <div className="mt-10">
+              <VideoShowcase videos={videos} />
+            </div>
+          </FadeIn>
+        </section>
+      ) : null}
 
       <section className="px-5 py-16 md:px-8 md:py-24">
         <FadeIn className="mx-auto max-w-7xl">
