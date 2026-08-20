@@ -2,17 +2,13 @@
 
 import { FormEvent, useState, type ReactNode } from "react";
 import { Button } from "./Button";
+import {
+  contactServices,
+  type ContactService,
+} from "@/data/contact";
 
-export const contactServices = [
-  "Photography",
-  "Videography",
-  "Invitation / Poster",
-  "Portfolio Website",
-  "Social Media",
-  "Not Sure Yet",
-] as const;
-
-export type ContactService = (typeof contactServices)[number];
+export type { ContactService };
+export { contactServices };
 
 const fieldClass =
   "w-full rounded-sm border border-charcoal/15 bg-cream-soft px-4 py-3 text-charcoal outline-none transition focus:border-terracotta focus:ring-2 focus:ring-terracotta/20";
@@ -59,7 +55,15 @@ export function ContactForm({ defaultServices = [] }: ContactFormProps) {
         }),
       });
 
-      const result = (await response.json()) as { error?: string };
+      const raw = await response.text();
+      let result: { error?: string; ok?: boolean } = {};
+      if (raw) {
+        try {
+          result = JSON.parse(raw) as { error?: string; ok?: boolean };
+        } catch {
+          throw new Error("Unable to send your message right now. Please try WhatsApp.");
+        }
+      }
 
       if (!response.ok) {
         throw new Error(result.error ?? "Unable to send your message.");
