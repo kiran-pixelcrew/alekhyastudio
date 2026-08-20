@@ -24,34 +24,57 @@ export async function PATCH(request: Request, { params }: Params) {
   }
 
   const data = body as Record<string, unknown>;
-  const updates: Record<string, unknown> = {};
+  const $set: Record<string, unknown> = {};
+  const $unset: Record<string, 1> = {};
 
   if (typeof data.clientName === "string") {
-    updates.clientName = data.clientName.trim();
+    const clientName = data.clientName.trim();
+    if (!clientName) return jsonError("Client name is required.");
+    $set.clientName = clientName;
   }
   if (typeof data.email === "string") {
-    updates.email = data.email.trim().toLowerCase();
+    const email = data.email.trim().toLowerCase();
+    if (!email) return jsonError("Email is required.");
+    $set.email = email;
   }
-  if (typeof data.phone === "string") updates.phone = data.phone.trim();
-  if (typeof data.service === "string") updates.service = data.service.trim();
+  if (typeof data.phone === "string") $set.phone = data.phone.trim();
+  if (typeof data.service === "string") {
+    const service = data.service.trim();
+    if (!service) return jsonError("Service is required.");
+    $set.service = service;
+  }
   if (typeof data.location === "string") {
-    updates.location = data.location.trim();
+    $set.location = data.location.trim();
   }
-  if (typeof data.notes === "string") updates.notes = data.notes.trim();
-  if (typeof data.amountQuoted === "number") {
-    updates.amountQuoted = data.amountQuoted;
+  if (typeof data.notes === "string") $set.notes = data.notes.trim();
+  if (typeof data.amountQuoted === "number" && Number.isFinite(data.amountQuoted)) {
+    $set.amountQuoted = data.amountQuoted;
+  } else if (data.amountQuoted === null) {
+    $unset.amountQuoted = 1;
   }
   if (typeof data.eventDate === "string") {
-    updates.eventDate = data.eventDate ? new Date(data.eventDate) : null;
+    if (data.eventDate) {
+      $set.eventDate = new Date(data.eventDate);
+    } else {
+      $unset.eventDate = 1;
+    }
   }
   if (
     typeof data.status === "string" &&
     (BOOKING_STATUSES as readonly string[]).includes(data.status)
   ) {
-    updates.status = data.status;
+    $set.status = data.status;
   }
 
-  const booking = await Booking.findByIdAndUpdate(id, updates, {
+  if (Object.keys($set).length === 0 && Object.keys($unset).length === 0) {
+    return jsonError("No valid fields to update.");
+  }
+
+  const update: Record<string, unknown> = {};
+  if (Object.keys($set).length > 0) update.$set = $set;
+  if (Object.keys($unset).length > 0) update.$unset = $unset;
+
+  const booking = await Booking.findByIdAndUpdate(id, update, {
     new: true,
   }).lean();
 
