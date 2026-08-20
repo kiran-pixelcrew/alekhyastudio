@@ -4,12 +4,12 @@ import { WhyAlekhya } from "@/components/home/WhyAlekhya";
 import { FeaturedWork } from "@/components/home/FeaturedWork";
 // import { Testimonials } from "@/components/home/Testimonials";
 import { FinalCTA } from "@/components/home/FinalCTA";
-import { getHeroSlides } from "@/data/hero";
+import { getSelectedHeroSlides } from "@/lib/gallery";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
-  const heroSlides = getHeroSlides();
+export default async function HomePage() {
+  const heroSlides = await getSelectedHeroSlides();
 
   return (
     <>

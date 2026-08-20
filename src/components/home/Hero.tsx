@@ -11,71 +11,29 @@ type HeroProps = {
 };
 
 export function Hero({ slides }: HeroProps) {
-  const [index, setIndex] = useState(0);
-  const [mobileReady, setMobileReady] = useState<boolean[]>(() =>
-    slides.map(() => false),
-  );
+  const mobileSlides = slides.filter((slide) => slide.mobile !== slide.desktop);
+  const mobileDeck = mobileSlides.length > 0 ? mobileSlides : slides;
+
+  const [desktopIndex, setDesktopIndex] = useState(0);
+  const [mobileIndex, setMobileIndex] = useState(0);
 
   useEffect(() => {
     if (slides.length === 0) return;
     const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % slides.length);
+      setDesktopIndex((current) => (current + 1) % slides.length);
     }, 5200);
     return () => window.clearInterval(id);
   }, [slides.length]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    slides.forEach((slide, i) => {
-      const img = new window.Image();
-      img.onload = () => {
-        if (!cancelled) {
-          setMobileReady((current) => {
-            const next = [...current];
-            next[i] = true;
-            return next;
-          });
-        }
-      };
-      img.onerror = () => {
-        // Keep desktop fallback when Mimg* is not present yet
-      };
-      img.src = slide.mobile;
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [slides]);
+    if (mobileDeck.length === 0) return;
+    const id = window.setInterval(() => {
+      setMobileIndex((current) => (current + 1) % mobileDeck.length);
+    }, 5200);
+    return () => window.clearInterval(id);
+  }, [mobileDeck.length]);
 
   if (slides.length === 0) return null;
-
-  const slideDots = (
-    <div
-      className="flex items-center gap-2"
-      role="tablist"
-      aria-label="Showreel slides"
-    >
-      {slides.map((slide, i) => (
-        <button
-          key={slide.id}
-          type="button"
-          role="tab"
-          aria-selected={i === index}
-          aria-label={`Show slide ${i + 1}`}
-          className={[
-            "h-1.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-            i === index
-              ? "w-8 bg-button"
-              : "w-3 bg-charcoal/25 hover:bg-charcoal/45 md:bg-cream/40 md:hover:bg-cream/70",
-            i === index ? "md:bg-terracotta-soft" : "",
-          ].join(" ")}
-          onClick={() => setIndex(i)}
-        />
-      ))}
-    </div>
-  );
 
   return (
     <section className="relative overflow-hidden bg-cream md:min-h-[100svh] md:bg-charcoal">
@@ -84,7 +42,7 @@ export function Hero({ slides }: HeroProps) {
         {slides.map((slide, i) => (
           <div
             key={slide.id}
-            className={`hero-slide absolute inset-0 ${i === index ? "is-active" : ""}`}
+            className={`hero-slide absolute inset-0 ${i === desktopIndex ? "is-active" : ""}`}
           >
             <Image
               src={slide.desktop}
@@ -105,41 +63,63 @@ export function Hero({ slides }: HeroProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/92 via-charcoal/45 to-charcoal/25" />
       </div>
 
-      <div className="sr-only" aria-live="polite">
-        {slides[index].alt}
+      <div className="sr-only md:hidden" aria-live="polite">
+        {mobileDeck[mobileIndex].alt}
+      </div>
+      <div className="sr-only hidden md:block" aria-live="polite">
+        {slides[desktopIndex].alt}
       </div>
 
       {/* Mobile: stacked rounded image + text (mockup layout) */}
       <div className="relative mx-auto max-w-7xl px-5 pb-12 pt-20 md:hidden">
         <div className="relative aspect-[3/4] max-h-[70svh] w-full overflow-hidden rounded-3xl bg-charcoal/10 sm:aspect-[4/5]">
-          {slides.map((slide, i) => {
-            const mobileSrc = mobileReady[i] ? slide.mobile : slide.desktop;
-
-            return (
-              <div
-                key={slide.id}
-                className={`hero-slide absolute inset-0 ${i === index ? "is-active" : ""}`}
-              >
-                <Image
-                  src={mobileSrc}
-                  alt=""
-                  fill
-                  priority={i === 0}
-                  sizes="100vw"
-                  unoptimized
-                  className="object-cover"
-                  style={
-                    slide.mobilePosition
-                      ? { objectPosition: slide.mobilePosition }
-                      : undefined
-                  }
-                />
-              </div>
-            );
-          })}
+          {mobileDeck.map((slide, i) => (
+            <div
+              key={slide.id}
+              className={`hero-slide absolute inset-0 ${i === mobileIndex ? "is-active" : ""}`}
+            >
+              <Image
+                src={slide.mobile}
+                alt=""
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                unoptimized
+                className="object-cover"
+                style={
+                  slide.mobilePosition
+                    ? { objectPosition: slide.mobilePosition }
+                    : undefined
+                }
+              />
+            </div>
+          ))}
         </div>
 
-        <div className="mt-4 flex justify-center">{slideDots}</div>
+        <div className="mt-4 flex justify-center">
+          <div
+            className="flex items-center gap-2"
+            role="tablist"
+            aria-label="Showreel slides"
+          >
+            {mobileDeck.map((slide, i) => (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-selected={i === mobileIndex}
+                aria-label={`Show slide ${i + 1}`}
+                className={[
+                  "h-1.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+                  i === mobileIndex
+                    ? "w-8 bg-button"
+                    : "w-3 bg-charcoal/25 hover:bg-charcoal/45",
+                ].join(" ")}
+                onClick={() => setMobileIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
 
         <p className="mt-8 text-xs font-medium uppercase tracking-[0.18em] text-charcoal-muted">
           {heroContent.eyebrow}
@@ -190,7 +170,30 @@ export function Hero({ slides }: HeroProps) {
           </Button>
         </div>
 
-        <div className="mt-12">{slideDots}</div>
+        <div className="mt-12">
+          <div
+            className="flex items-center gap-2"
+            role="tablist"
+            aria-label="Showreel slides"
+          >
+            {slides.map((slide, i) => (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-selected={i === desktopIndex}
+                aria-label={`Show slide ${i + 1}`}
+                className={[
+                  "h-1.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+                  i === desktopIndex
+                    ? "w-8 bg-button md:bg-terracotta-soft"
+                    : "w-3 bg-cream/40 hover:bg-cream/70",
+                ].join(" ")}
+                onClick={() => setDesktopIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

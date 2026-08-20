@@ -3,8 +3,9 @@ import { PageHero } from "@/components/shared/PageHero";
 import { WorkGallery } from "@/components/work/WorkGallery";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { site } from "@/data/site";
-import { workItems } from "@/data/work";
+import { workItems, type WorkItem } from "@/data/work";
 import { withBustedSrc } from "@/lib/publicAsset";
+import { getSelectedWorkImages } from "@/lib/gallery";
 
 export const metadata: Metadata = {
   title: "Our Work",
@@ -12,8 +13,27 @@ export const metadata: Metadata = {
     "Portfolio of dance photography, invitation design, and portfolio websites by Alekhya Studio — one artistic eye, three outputs.",
 };
 
-export default function WorkPage() {
-  const items = withBustedSrc(workItems);
+export const dynamic = "force-dynamic";
+
+export default async function WorkPage() {
+  const selectedWork = await getSelectedWorkImages();
+  const staticItems = withBustedSrc(workItems);
+
+  let items: WorkItem[] = staticItems;
+  if (selectedWork && selectedWork.length > 0) {
+    const nonPhoto = staticItems.filter(
+      (item) => item.category !== "photography",
+    );
+    const photoItems: WorkItem[] = selectedWork.map((image) => ({
+      id: image.id,
+      title: image.alt,
+      category: "photography",
+      alt: image.alt,
+      src: image.src,
+      aspect: "portrait",
+    }));
+    items = [...photoItems, ...nonPhoto];
+  }
 
   return (
     <>
