@@ -3,6 +3,37 @@
 import { FormEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AdminButton } from "@/components/admin/AdminButton";
+import { adminHref, getAdminBasePath } from "@/lib/admin-host";
+
+function resolveBasePath() {
+  if (typeof window === "undefined") return "/admin" as const;
+  return getAdminBasePath(window.location.host);
+}
+
+function safeNextPath(next: string | null, basePath: "" | "/admin") {
+  const fallback = adminHref(basePath);
+  if (!next) return fallback;
+
+  // Subdomain mode: allow /, /bookings, etc. Block protocol-relative / external.
+  if (next.startsWith("//") || next.includes("://")) return fallback;
+
+  if (basePath === "") {
+    if (next.startsWith("/admin")) {
+      return next === "/admin" || next === "/admin/"
+        ? "/"
+        : next.replace(/^\/admin/, "") || "/";
+    }
+    if (next.startsWith("/")) return next;
+    return fallback;
+  }
+
+  if (next.startsWith("/admin")) return next;
+  if (next.startsWith("/") && next !== "/") {
+    // Local path mode: coerce /bookings → /admin/bookings
+    return `/admin${next}`;
+  }
+  return fallback;
+}
 
 export function LoginForm() {
   const router = useRouter();
@@ -30,8 +61,9 @@ export function LoginForm() {
         return;
       }
 
-      const next = searchParams.get("next") || "/admin";
-      router.push(next.startsWith("/admin") ? next : "/admin");
+      const basePath = resolveBasePath();
+      const next = safeNextPath(searchParams.get("next"), basePath);
+      router.push(next);
       router.refresh();
     } catch {
       setError("Unable to sign in right now.");

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { StatCard } from "@/components/admin/StatCard";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { formatCurrency, formatDateTime } from "@/lib/format";
+import { adminHref, getAdminBasePath } from "@/lib/admin-host";
 
 type StatsResponse = {
   stats: {
@@ -38,8 +39,10 @@ type StatsResponse = {
 export default function AdminOverviewPage() {
   const [data, setData] = useState<StatsResponse | null>(null);
   const [error, setError] = useState("");
+  const [basePath, setBasePath] = useState<"" | "/admin">("/admin");
 
   useEffect(() => {
+    setBasePath(getAdminBasePath(window.location.host));
     fetch("/api/admin/stats")
       .then(async (res) => {
         if (!res.ok) throw new Error("Failed to load stats");
@@ -100,7 +103,7 @@ export default function AdminOverviewPage() {
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-2xl">Recent bookings</h2>
             <Link
-              href="/admin/bookings"
+              href={adminHref(basePath, "bookings")}
               className="text-xs uppercase tracking-[0.16em] text-teal"
             >
               View all
@@ -137,7 +140,7 @@ export default function AdminOverviewPage() {
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-display text-2xl">Recent emails</h2>
             <Link
-              href="/admin/emails"
+              href={adminHref(basePath, "emails")}
               className="text-xs uppercase tracking-[0.16em] text-teal"
             >
               View all

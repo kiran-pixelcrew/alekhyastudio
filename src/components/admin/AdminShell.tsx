@@ -4,40 +4,58 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AdminButton } from "@/components/admin/AdminButton";
 import { AdminUiProvider, useAdminUi } from "@/components/admin/AdminUi";
+import {
+  adminHref,
+  type AdminBasePath,
+} from "@/lib/admin-host";
 
-const nav = [
-  { href: "/admin", label: "Overview" },
-  { href: "/admin/bookings", label: "Bookings" },
-  { href: "/admin/payments", label: "Payments" },
-  { href: "/admin/emails", label: "Emails" },
-  { href: "/admin/images", label: "Images" },
-  { href: "/admin/videos", label: "Videos" },
-];
+const navSegments = [
+  { segment: "", label: "Overview" },
+  { segment: "bookings", label: "Bookings" },
+  { segment: "payments", label: "Payments" },
+  { segment: "emails", label: "Emails" },
+  { segment: "images", label: "Images" },
+  { segment: "videos", label: "Videos" },
+] as const;
 
 export function AdminShell({
   adminName,
+  basePath,
   children,
 }: {
   adminName: string;
+  basePath: AdminBasePath;
   children: React.ReactNode;
 }) {
   return (
     <AdminUiProvider>
-      <AdminShellFrame adminName={adminName}>{children}</AdminShellFrame>
+      <AdminShellFrame adminName={adminName} basePath={basePath}>
+        {children}
+      </AdminShellFrame>
     </AdminUiProvider>
   );
 }
 
+function isActive(pathname: string, href: string, isOverview: boolean) {
+  if (isOverview) {
+    return pathname === href || pathname === "/admin" || pathname === "/";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 function AdminShellFrame({
   adminName,
+  basePath,
   children,
 }: {
   adminName: string;
+  basePath: AdminBasePath;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
   const router = useRouter();
   const { confirm } = useAdminUi();
+  const loginHref = adminHref(basePath, "login");
 
   async function logout() {
     const ok = await confirm({
@@ -50,7 +68,7 @@ function AdminShellFrame({
     if (!ok) return;
 
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/admin/login");
+    router.push(loginHref);
     router.refresh();
   }
 
@@ -64,15 +82,13 @@ function AdminShellFrame({
           </p>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-4 md:flex-1 md:flex-col md:overflow-visible">
-          {nav.map((item) => {
-            const active =
-              item.href === "/admin"
-                ? pathname === "/admin"
-                : pathname.startsWith(item.href);
+          {navSegments.map((item) => {
+            const href = adminHref(basePath, item.segment);
+            const active = isActive(pathname, href, item.segment === "");
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={item.segment || "overview"}
+                href={href}
                 className={`flex items-center whitespace-nowrap rounded-lg px-3 py-2.5 text-sm leading-none transition ${
                   active
                     ? "bg-button text-cream shadow-sm shadow-button/30"

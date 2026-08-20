@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { getSession } from "@/lib/auth";
+import { getAdminBasePath } from "@/lib/admin-host";
 import { AdminShell } from "@/components/admin/AdminShell";
 
 export const metadata: Metadata = {
@@ -13,10 +15,16 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }>) {
   const session = await getSession();
+  const host = (await headers()).get("host");
+  const basePath = getAdminBasePath(host);
 
   if (!session) {
     return <>{children}</>;
   }
 
-  return <AdminShell adminName={session.name}>{children}</AdminShell>;
+  return (
+    <AdminShell adminName={session.name} basePath={basePath}>
+      {children}
+    </AdminShell>
+  );
 }
