@@ -1,0 +1,14 @@
+---
+description: Always run a production build before any git push
+alwaysApply: true
+---
+
+# Build before push
+
+Before `git push` to **any** branch (including `main`):
+
+1. Run `npm run build` and wait for it to succeed.
+2. Only push if the build exits 0.
+3. If the build fails, fix TypeScript/lint/build errors first — do not push a broken commit.
+
+A git `pre-push` hook in `.githooks/` also enforces this for local pushes. Prefer catching failures locally over waiting for Vercel.

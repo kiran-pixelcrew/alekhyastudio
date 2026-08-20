@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# Block pushes when the production build fails (same check Vercel runs).
+set -e
+
+echo "→ Running npm run build before push (prevents Vercel failures)..."
+npm run build
+echo "→ Build passed. Pushing..."
