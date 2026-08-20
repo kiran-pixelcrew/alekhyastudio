@@ -4,9 +4,14 @@ import { Button } from "@/components/shared/Button";
 import { FadeIn } from "@/components/shared/FadeIn";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { CTABanner } from "@/components/shared/CTABanner";
+import { CreativeGallery } from "@/components/shared/CreativeGallery";
 import { getService } from "@/data/services";
 import { invitationProcess } from "@/data/invitations";
 import { site } from "@/data/site";
+import {
+  getSelectedCreatives,
+  getSelectedInvitations,
+} from "@/lib/gallery";
 
 const service = getService("invitations&creatives");
 
@@ -15,7 +20,16 @@ export const metadata: Metadata = {
   description: service.seoDescription,
 };
 
-export default function InvitationsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function InvitationsPage() {
+  const [creatives, invitations] = await Promise.all([
+    getSelectedCreatives(),
+    getSelectedInvitations(),
+  ]);
+
+  const hasGallery = invitations.length > 0 || creatives.length > 0;
+
   return (
     <>
       <PageHero
@@ -54,7 +68,7 @@ export default function InvitationsPage() {
             <p className="mt-10 max-w-2xl text-charcoal-muted leading-relaxed">
               See invitation and creative samples in{" "}
               <a
-                href="/work"
+                href="/work?category=invitations"
                 className="font-medium text-button underline-offset-4 hover:underline"
               >
                 Our Work
@@ -62,6 +76,28 @@ export default function InvitationsPage() {
               .
             </p>
           </FadeIn>
+
+          {hasGallery ? (
+            <div className="space-y-16">
+              {invitations.length > 0 ? (
+                <FadeIn>
+                  <CreativeGallery
+                    images={invitations}
+                    title="Invitation designs"
+                  />
+                </FadeIn>
+              ) : null}
+
+              {creatives.length > 0 ? (
+                <FadeIn>
+                  <CreativeGallery
+                    images={creatives}
+                    title="Creatives & posters"
+                  />
+                </FadeIn>
+              ) : null}
+            </div>
+          ) : null}
 
           <div>
             <FadeIn>

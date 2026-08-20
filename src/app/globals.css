@@ -205,12 +205,19 @@ h6 {
     grid-auto-rows: minmax(250px, 280px);
   }
 
+  .bento-span-tall {
+    /* 1 col × 2 rows ≈ 9:16 */
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
   .bento-span-wide {
     grid-column: span 2;
     grid-row: span 2;
   }
 
   .bento-span-featured {
+    /* 2 cols × 2 rows ≈ 16:9–ish landscape stage */
     grid-column: span 2;
     grid-row: span 2;
   }

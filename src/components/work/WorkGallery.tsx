@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   workCategories,
   type WorkCategory,
@@ -9,18 +10,35 @@ import {
 } from "@/data/work";
 import { Button } from "@/components/shared/Button";
 import { ImageWatermark } from "@/components/shared/ImageWatermark";
-import { getBentoImageClass, getFeaturedBentoClass } from "@/lib/bentoGrid";
+import {
+  getBentoImageClass,
+  getCreativeFrameStyle,
+  getFeaturedBentoClass,
+} from "@/lib/bentoGrid";
 import { GalleryLightbox } from "@/components/work/GalleryLightbox";
 
 type WorkGalleryProps = {
   items: WorkItem[];
 };
 
+function initialCategory(param: string | null): WorkCategory {
+  if (param === "invitations" || param === "invitations&creatives") {
+    return "invitations&creatives";
+  }
+  if (param === "websites" || param === "websites&portfolios") {
+    return "websites&portfolios";
+  }
+  return "photography";
+}
+
 export function WorkGallery({ items }: WorkGalleryProps) {
-  const [active, setActive] = useState<WorkCategory>("photography");
+  const searchParams = useSearchParams();
+  const [active, setActive] = useState<WorkCategory>(() =>
+    initialCategory(searchParams.get("category")),
+  );
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const useBento = active === "photography";
   const isInvitations = active === "invitations&creatives";
+  const useBento = active === "photography";
 
   const filtered = useMemo(
     () => items.filter((item) => item.category === active),
@@ -66,21 +84,32 @@ export function WorkGallery({ items }: WorkGalleryProps) {
           useBento
             ? "bento-grid"
             : isInvitations
-              ? "grid grid-cols-1 justify-items-center"
+              ? "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
               : "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         }
       >
         {filtered.map((item, index) => {
           const isInvitation = item.category === "invitations&creatives";
           const canLightbox = !item.href;
+          const inviteRatio =
+            item.width && item.height && item.height > 0
+              ? item.width / item.height
+              : null;
+          const isWideInvite =
+            isInvitation &&
+            (item.aspect === "landscape" ||
+              (inviteRatio !== null && inviteRatio >= 1.2));
           const spanClass = useBento
             ? getFeaturedBentoClass(index, filtered.length, item.aspect)
             : "";
           const imageClass = useBento
             ? getBentoImageClass(spanClass, item.aspect)
             : isInvitation
-              ? "aspect-[32/15] bg-charcoal/5"
+              ? undefined
               : "aspect-[16/10]";
+          const inviteFrameStyle = isInvitation
+            ? getCreativeFrameStyle(item)
+            : undefined;
 
           return (
             <li
@@ -88,7 +117,7 @@ export function WorkGallery({ items }: WorkGalleryProps) {
               className={[
                 useBento ? "bento-item" : undefined,
                 spanClass || undefined,
-                isInvitation ? "w-full max-w-5xl" : undefined,
+                isWideInvite ? "sm:col-span-2 lg:col-span-4" : undefined,
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -99,11 +128,13 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                     type="button"
                     className={[
                       "img-zoom relative block w-full overflow-hidden text-left",
+                      isInvitation ? "bg-cream-deep" : undefined,
                       useBento ? "h-full" : undefined,
                       imageClass,
                     ]
                       .filter(Boolean)
                       .join(" ")}
+                    style={inviteFrameStyle}
                     onClick={() => setLightboxIndex(index)}
                     aria-label={`View ${item.title} fullscreen`}
                   >
@@ -112,8 +143,8 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                       alt={item.alt}
                       fill
                       sizes={
-                        isInvitation
-                          ? "(max-width: 1024px) 100vw, 1024px"
+                        isWideInvite
+                          ? "100vw"
                           : useBento
                             ? spanClass.includes("featured") ||
                               spanClass.includes("wide")
@@ -123,11 +154,14 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                       }
                       className={
                         isInvitation
-                          ? "object-contain"
+                          ? "object-contain object-center"
                           : "object-cover object-center"
                       }
                       loading="lazy"
-                      unoptimized={item.src.startsWith("/images/")}
+                      unoptimized={
+                        item.src.startsWith("/images/") ||
+                        item.src.includes("res.cloudinary.com")
+                      }
                     />
                     {!isInvitation ? <ImageWatermark /> : null}
                     <span className="pointer-events-none absolute inset-0 bg-charcoal/0 transition group-hover:bg-charcoal/15" />
@@ -153,7 +187,10 @@ export function WorkGallery({ items }: WorkGalleryProps) {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover object-top"
                       loading="lazy"
-                      unoptimized={item.src.startsWith("/images/")}
+                      unoptimized={
+                        item.src.startsWith("/images/") ||
+                        item.src.includes("res.cloudinary.com")
+                      }
                     />
                     <ImageWatermark />
                     <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent pb-5 opacity-100 transition md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">

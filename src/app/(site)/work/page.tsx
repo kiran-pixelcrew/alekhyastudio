@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/shared/PageHero";
 import { WorkGallery } from "@/components/work/WorkGallery";
 import { CTABanner } from "@/components/shared/CTABanner";
 import { site } from "@/data/site";
 import { workItems, type WorkItem } from "@/data/work";
 import { withBustedSrc } from "@/lib/publicAsset";
-import { getSelectedWorkImages } from "@/lib/gallery";
+import {
+  getSelectedCreatives,
+  getSelectedInvitations,
+  getSelectedWorkImages,
+} from "@/lib/gallery";
 
 export const metadata: Metadata = {
   title: "Our Work",
@@ -16,23 +21,61 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function WorkPage() {
-  const selectedWork = await getSelectedWorkImages();
-  const staticItems = withBustedSrc(workItems);
+  const [selectedWork, selectedInvitations, selectedCreatives] =
+    await Promise.all([
+      getSelectedWorkImages(),
+      getSelectedInvitations(),
+      getSelectedCreatives(),
+    ]);
 
+  const staticItems = withBustedSrc(workItems);
   let items: WorkItem[] = staticItems;
+
   if (selectedWork && selectedWork.length > 0) {
-    const nonPhoto = staticItems.filter(
-      (item) => item.category !== "photography",
-    );
+    const nonPhoto = items.filter((item) => item.category !== "photography");
     const photoItems: WorkItem[] = selectedWork.map((image) => ({
       id: image.id,
       title: image.alt,
       category: "photography",
       alt: image.alt,
       src: image.src,
-      aspect: "portrait",
+      aspect: image.aspect,
     }));
     items = [...photoItems, ...nonPhoto];
+  }
+
+  const dbInviteCreatives: WorkItem[] = [
+    ...selectedInvitations.map((image) => ({
+      id: image.id,
+      title: image.alt,
+      category: "invitations&creatives" as const,
+      alt: image.alt,
+      src: image.src,
+      aspect: image.aspect,
+      width: image.width,
+      height: image.height,
+    })),
+    ...selectedCreatives.map((image) => ({
+      id: image.id,
+      title: image.alt,
+      category: "invitations&creatives" as const,
+      alt: image.alt,
+      src: image.src,
+      aspect: image.aspect,
+      width: image.width,
+      height: image.height,
+    })),
+  ];
+
+  // Keep existing static samples and add admin uploads in front.
+  if (dbInviteCreatives.length > 0) {
+    const staticInviteCreatives = items.filter(
+      (item) => item.category === "invitations&creatives",
+    );
+    const otherItems = items.filter(
+      (item) => item.category !== "invitations&creatives",
+    );
+    items = [...otherItems, ...dbInviteCreatives, ...staticInviteCreatives];
   }
 
   return (
@@ -44,7 +87,9 @@ export default async function WorkPage() {
       />
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
-          <WorkGallery items={items} />
+          <Suspense fallback={<p className="text-charcoal-muted">Loading work…</p>}>
+            <WorkGallery items={items} />
+          </Suspense>
         </div>
       </section>
       <CTABanner

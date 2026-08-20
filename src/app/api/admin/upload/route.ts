@@ -18,6 +18,7 @@ export async function POST(request: Request) {
   const folderRaw = formData.get("folder");
   const altRaw = formData.get("alt");
   const selectedRaw = formData.get("selected");
+  const displayAspectRaw = formData.get("displayAspect");
 
   if (!(file instanceof File)) {
     return jsonError("A file is required.");
@@ -31,6 +32,10 @@ export async function POST(request: Request) {
 
   const alt = typeof altRaw === "string" ? altRaw.trim() : "";
   const selected = selectedRaw === "true";
+  const displayAspect =
+    displayAspectRaw === "portrait" || displayAspectRaw === "landscape"
+      ? displayAspectRaw
+      : "auto";
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const dataUri = `data:${file.type || "image/jpeg"};base64,${bytes.toString("base64")}`;
@@ -58,6 +63,7 @@ export async function POST(request: Request) {
       format: result.format,
       bytes: result.bytes,
       selected,
+      displayAspect,
       sortOrder: (maxOrder?.sortOrder ?? 0) + 1,
     });
 

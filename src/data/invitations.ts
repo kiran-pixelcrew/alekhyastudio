@@ -1,14 +1,12 @@
-export const invitationProjects = [
-  {
-    id: "inv0",
-    title: "Poorvi Rangapravesha Invite",
-    type: "Rangapravesha",
-    description:
-      "Custom Rangapravesha invitation design with portrait-led composition, warm green palette, and event details crafted for print and digital sharing.",
-    src: "/images/invitations/poorvi-rangapravesha.webp",
-    alt: "Rangapravesha invitation featuring classical dancer portrait and event details",
-  },
-];
+/** Admin-uploaded invitations/creatives are loaded from MongoDB. */
+export const invitationProjects: {
+  id: string;
+  title: string;
+  type: string;
+  description: string;
+  src: string;
+  alt: string;
+}[] = [];
 
 export const invitationProcess = [
   {

@@ -1,5 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
 
+export {
+  GALLERY_FOLDERS,
+  GALLERY_FOLDER_LABELS,
+  type GalleryFolder,
+} from "@/lib/gallery-folders";
+
 let configured = false;
 
 export function getCloudinary() {
@@ -23,16 +29,6 @@ export function getCloudinary() {
 
   return cloudinary;
 }
-
-export const GALLERY_FOLDERS = [
-  "hero",
-  "work",
-  "invitations",
-  "websites",
-  "general",
-] as const;
-
-export type GalleryFolder = (typeof GALLERY_FOLDERS)[number];
 
 export const VIDEO_UPLOAD_FOLDER = "alekhyastudio/videography";
 export const VIDEO_UPLOAD_PRESET = "alekhya_videography_unsigned";

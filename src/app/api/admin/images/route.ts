@@ -49,6 +49,13 @@ export async function PATCH(request: Request) {
   if (typeof data.alt === "string") updates.alt = data.alt.trim();
   if (typeof data.sortOrder === "number") updates.sortOrder = data.sortOrder;
   if (
+    data.displayAspect === "auto" ||
+    data.displayAspect === "portrait" ||
+    data.displayAspect === "landscape"
+  ) {
+    updates.displayAspect = data.displayAspect;
+  }
+  if (
     typeof data.folder === "string" &&
     (GALLERY_FOLDERS as readonly string[]).includes(data.folder)
   ) {
@@ -61,9 +68,11 @@ export async function PATCH(request: Request) {
     updates.mobilePosition = data.mobilePosition.trim();
   }
 
-  const image = await GalleryImage.findByIdAndUpdate(id, updates, {
-    new: true,
-  }).lean();
+  const image = await GalleryImage.findByIdAndUpdate(
+    id,
+    { $set: updates },
+    { new: true, runValidators: true },
+  ).lean();
 
   if (!image) return jsonError("Image not found.", 404);
   return NextResponse.json({ image });

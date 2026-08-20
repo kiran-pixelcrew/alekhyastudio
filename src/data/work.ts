@@ -21,6 +21,8 @@ export type WorkItem = {
   src: string;
   aspect: "portrait" | "landscape" | "square";
   href?: string;
+  width?: number;
+  height?: number;
 };
 
 /** Separate photography set for Our Work — not hero images. */

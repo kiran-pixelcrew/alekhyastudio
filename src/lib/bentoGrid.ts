@@ -67,6 +67,31 @@ function getPhotographyBentoClass(_index: number, aspect: BentoAspect) {
   return "bento-span-tall";
 }
 
+/**
+ * Strict aspect tiles for invitations/creatives admin layout choice.
+ * Portrait → tall column; landscape banners → full width so wide invites aren't cropped.
+ */
+export function getCreativeBentoClass(aspect: BentoAspect = "portrait") {
+  if (aspect === "landscape") {
+    return "bento-span-full";
+  }
+  return "bento-span-tall";
+}
+
+/** CSS aspect-ratio for invitation/creative frames (avoids object-cover cropping). */
+export function getCreativeFrameStyle(item: {
+  width?: number;
+  height?: number;
+  aspect?: BentoAspect;
+}): { aspectRatio: string } {
+  if (item.width && item.height && item.width > 0 && item.height > 0) {
+    return { aspectRatio: `${item.width} / ${item.height}` };
+  }
+  if (item.aspect === "landscape") return { aspectRatio: "16 / 9" };
+  if (item.aspect === "square") return { aspectRatio: "1" };
+  return { aspectRatio: "3 / 4" };
+}
+
 const featuredLayouts: Record<number, string[]> = {
   4: [
     "bento-span-featured",
@@ -107,15 +132,14 @@ export function getFeaturedBentoClass(
     if (aspect === "portrait" && layout[index] === "bento-span-wide") {
       return "bento-span-tall";
     }
+    if (aspect === "portrait" && layout[index] === "bento-span-featured") {
+      return "bento-span-tall";
+    }
     if (aspect === "landscape" && layout[index] === "bento-span-tall") {
       return "bento-span-featured";
     }
     return layout[index];
   }
 
-  return getBentoItemClass({
-    aspect,
-    index,
-    total,
-  });
+  return getPhotographyBentoClass(index, aspect);
 }
