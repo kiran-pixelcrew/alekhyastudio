@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import type { HeroSlide } from "@/data/hero";
 import { getHeroSlides as getStaticHeroSlides } from "@/data/hero";
 import type { BentoAspect } from "@/lib/bentoGrid";
+import { heroScreenForImage } from "@/lib/gallery-folders";
 
 export type GalleryMediaItem = {
   id: string;
@@ -66,6 +67,7 @@ export async function getSelectedHeroSlides(): Promise<HeroSlide[]> {
       desktop: image.secureUrl,
       mobile: image.secureUrl,
       alt: image.alt || `Hero image ${index + 1}`,
+      screen: heroScreenForImage(image),
       desktopPosition: image.desktopPosition || undefined,
       mobilePosition: image.mobilePosition || undefined,
     }));

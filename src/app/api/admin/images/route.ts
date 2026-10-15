@@ -61,6 +61,13 @@ export async function PATCH(request: Request) {
   ) {
     updates.folder = data.folder;
   }
+  if (
+    data.heroTarget === "desktop" ||
+    data.heroTarget === "mobile" ||
+    data.heroTarget === "both"
+  ) {
+    updates.heroTarget = data.heroTarget;
+  }
   if (typeof data.desktopPosition === "string") {
     updates.desktopPosition = data.desktopPosition.trim();
   }

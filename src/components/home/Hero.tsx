@@ -10,20 +10,35 @@ type HeroProps = {
   slides: HeroSlide[];
 };
 
+function isDesktopSlide(slide: HeroSlide) {
+  return slide.screen !== "mobile";
+}
+
+function isMobileSlide(slide: HeroSlide) {
+  if (slide.screen === "mobile") return true;
+  if (slide.screen === "desktop") return false;
+  // Static pairs keep a separate portrait file. One file never fills both screens.
+  return slide.mobile !== slide.desktop;
+}
+
 export function Hero({ slides }: HeroProps) {
-  const mobileSlides = slides.filter((slide) => slide.mobile !== slide.desktop);
-  const mobileDeck = mobileSlides.length > 0 ? mobileSlides : slides;
+  const desktopSlides = slides.filter(isDesktopSlide);
+  const mobileDeck = slides.filter(isMobileSlide);
 
   const [desktopIndex, setDesktopIndex] = useState(0);
   const [mobileIndex, setMobileIndex] = useState(0);
+  const activeDesktop =
+    desktopSlides.length > 0 ? desktopIndex % desktopSlides.length : 0;
+  const activeMobile =
+    mobileDeck.length > 0 ? mobileIndex % mobileDeck.length : 0;
 
   useEffect(() => {
-    if (slides.length === 0) return;
+    if (desktopSlides.length === 0) return;
     const id = window.setInterval(() => {
-      setDesktopIndex((current) => (current + 1) % slides.length);
+      setDesktopIndex((current) => (current + 1) % desktopSlides.length);
     }, 5200);
     return () => window.clearInterval(id);
-  }, [slides.length]);
+  }, [desktopSlides.length]);
 
   useEffect(() => {
     if (mobileDeck.length === 0) return;
@@ -33,16 +48,16 @@ export function Hero({ slides }: HeroProps) {
     return () => window.clearInterval(id);
   }, [mobileDeck.length]);
 
-  if (slides.length === 0) return null;
+  if (desktopSlides.length === 0 && mobileDeck.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden bg-cream md:min-h-[100svh] md:bg-charcoal">
       {/* Desktop full-bleed slideshow */}
       <div className="absolute inset-0 hidden md:block" aria-hidden>
-        {slides.map((slide, i) => (
+        {desktopSlides.map((slide, i) => (
           <div
             key={slide.id}
-            className={`hero-slide absolute inset-0 ${i === desktopIndex ? "is-active" : ""}`}
+            className={`hero-slide absolute inset-0 ${i === activeDesktop ? "is-active" : ""}`}
           >
             <Image
               src={slide.desktop}
@@ -64,19 +79,21 @@ export function Hero({ slides }: HeroProps) {
       </div>
 
       <div className="sr-only md:hidden" aria-live="polite">
-        {mobileDeck[mobileIndex].alt}
+        {mobileDeck[activeMobile]?.alt}
       </div>
       <div className="sr-only hidden md:block" aria-live="polite">
-        {slides[desktopIndex].alt}
+        {desktopSlides[activeDesktop]?.alt}
       </div>
 
       {/* Mobile: stacked rounded image + text (mockup layout) */}
       <div className="relative mx-auto max-w-7xl px-5 pb-12 pt-20 md:hidden">
+        {mobileDeck.length > 0 ? (
+        <>
         <div className="relative aspect-[3/4] max-h-[70svh] w-full overflow-hidden rounded-3xl bg-charcoal/10 sm:aspect-[4/5]">
           {mobileDeck.map((slide, i) => (
             <div
               key={slide.id}
-              className={`hero-slide absolute inset-0 ${i === mobileIndex ? "is-active" : ""}`}
+              className={`hero-slide absolute inset-0 ${i === activeMobile ? "is-active" : ""}`}
             >
               <Image
                 src={slide.mobile}
@@ -107,11 +124,11 @@ export function Hero({ slides }: HeroProps) {
                 key={slide.id}
                 type="button"
                 role="tab"
-                aria-selected={i === mobileIndex}
+                aria-selected={i === activeMobile}
                 aria-label={`Show slide ${i + 1}`}
                 className={[
                   "h-1.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-                  i === mobileIndex
+                  i === activeMobile
                     ? "w-8 bg-button"
                     : "w-3 bg-charcoal/25 hover:bg-charcoal/45",
                 ].join(" ")}
@@ -120,6 +137,8 @@ export function Hero({ slides }: HeroProps) {
             ))}
           </div>
         </div>
+        </>
+        ) : null}
 
         <p className="mt-8 text-xs font-medium uppercase tracking-[0.18em] text-charcoal-muted">
           {heroContent.eyebrow}
@@ -170,22 +189,23 @@ export function Hero({ slides }: HeroProps) {
           </Button>
         </div>
 
+        {desktopSlides.length > 0 ? (
         <div className="mt-12">
           <div
             className="flex items-center gap-2"
             role="tablist"
             aria-label="Showreel slides"
           >
-            {slides.map((slide, i) => (
+            {desktopSlides.map((slide, i) => (
               <button
                 key={slide.id}
                 type="button"
                 role="tab"
-                aria-selected={i === desktopIndex}
+                aria-selected={i === activeDesktop}
                 aria-label={`Show slide ${i + 1}`}
                 className={[
                   "h-1.5 rounded-full transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-                  i === desktopIndex
+                  i === activeDesktop
                     ? "w-8 bg-button md:bg-terracotta-soft"
                     : "w-3 bg-cream/40 hover:bg-cream/70",
                 ].join(" ")}
@@ -194,6 +214,7 @@ export function Hero({ slides }: HeroProps) {
             ))}
           </div>
         </div>
+        ) : null}
       </div>
     </section>
   );

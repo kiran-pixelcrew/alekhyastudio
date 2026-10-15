@@ -28,6 +28,15 @@ const GalleryImageSchema = new Schema(
       default: "auto",
     },
     sortOrder: { type: Number, default: 0 },
+    /**
+     * Hero slideshow placement. desktop and mobile are separate carousels.
+     * Ignored unless folder is "hero".
+     */
+    heroTarget: {
+      type: String,
+      enum: ["desktop", "mobile", "both"],
+      default: "both",
+    },
     desktopPosition: { type: String, default: "" },
     mobilePosition: { type: String, default: "" },
   },
@@ -44,7 +53,10 @@ export type GalleryImageDocument = InferSchemaType<
 
 // Hot reload can keep a stale compiled model without new paths — rebuild if needed.
 const existing = models.GalleryImage;
-if (existing && !existing.schema.path("displayAspect")) {
+if (
+  existing &&
+  (!existing.schema.path("displayAspect") || !existing.schema.path("heroTarget"))
+) {
   delete models.GalleryImage;
 }
 

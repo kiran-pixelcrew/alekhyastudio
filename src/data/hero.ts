@@ -11,6 +11,8 @@ export type HeroSlide = {
   desktopPosition?: string;
   /** CSS object-position for mobile crop */
   mobilePosition?: string;
+  /** Which slideshows include this slide. Defaults to both. */
+  screen?: "desktop" | "mobile" | "both";
 };
 
 function withCacheBust(publicPath: string) {
@@ -33,15 +35,16 @@ function slide(
   const desktop = withCacheBust(`/images/hero/img${n}.webp`);
   const mobilePath = `/images/hero/Mimg${n}.webp`;
   const mobileFull = join(process.cwd(), "public", mobilePath);
-  const mobile = existsSync(mobileFull)
-    ? withCacheBust(mobilePath)
-    : desktop;
+  const hasMobile = existsSync(mobileFull);
+  const mobile = hasMobile ? withCacheBust(mobilePath) : desktop;
 
   return {
     id: String(n),
     desktop,
     mobile,
     alt,
+    // Dedicated portrait files play on mobile; landscape-only files stay on desktop.
+    screen: hasMobile ? "both" : "desktop",
     ...positions,
   };
 }

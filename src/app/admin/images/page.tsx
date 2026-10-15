@@ -7,9 +7,12 @@ import { useAdminUi } from "@/components/admin/AdminUi";
 import {
   GALLERY_FOLDERS,
   GALLERY_FOLDER_LABELS,
+  heroScreenForImage,
   type GalleryFolder,
 } from "@/lib/gallery-folders";
 import type { DisplayAspect } from "@/lib/gallery";
+
+type HeroTarget = "desktop" | "mobile" | "both";
 
 type GalleryImage = {
   _id: string;
@@ -19,6 +22,7 @@ type GalleryImage = {
   selected: boolean;
   sortOrder: number;
   displayAspect?: DisplayAspect;
+  heroTarget?: HeroTarget;
   width?: number;
   height?: number;
 };
@@ -30,6 +34,14 @@ const ASPECT_OPTIONS: { value: DisplayAspect; label: string }[] = [
   { value: "portrait", label: "9:16" },
   { value: "landscape", label: "16:9" },
 ];
+
+const HERO_TARGET_OPTIONS: { value: "desktop" | "mobile"; label: string }[] = [
+  { value: "desktop", label: "Desktop" },
+  { value: "mobile", label: "Mobile" },
+];
+
+const HERO_SIZE_HINT =
+  "Desktop: 1920 × 1080 px (16:9). Mobile: 1080 × 1440 px (3:4).";
 
 function usesBentoAspect(folder: string) {
   return (
@@ -48,6 +60,7 @@ export default function AdminImagesPage() {
   const [alt, setAlt] = useState("");
   const [selectedOnUpload, setSelectedOnUpload] = useState(true);
   const [uploadAspect, setUploadAspect] = useState<DisplayAspect>("auto");
+  const [uploadHeroTarget, setUploadHeroTarget] = useState<HeroTarget>("desktop");
   const [uploading, setUploading] = useState(false);
 
   const fieldClass =
@@ -84,6 +97,7 @@ export default function AdminImagesPage() {
       body.append("alt", alt);
       body.append("selected", selectedOnUpload ? "true" : "false");
       body.append("displayAspect", uploadAspect);
+      body.append("heroTarget", uploadHeroTarget);
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",
@@ -98,6 +112,7 @@ export default function AdminImagesPage() {
       setFile(null);
       setAlt("");
       setUploadAspect("auto");
+      setUploadHeroTarget("desktop");
       toast("Image uploaded to Cloudinary.", "success");
       await load();
     } finally {
@@ -169,6 +184,51 @@ export default function AdminImagesPage() {
     );
   }
 
+  async function setHeroTarget(
+    image: GalleryImage,
+    heroTarget: "desktop" | "mobile",
+  ) {
+    if (image.heroTarget === heroTarget) return;
+
+    setImages((current) =>
+      current.map((item) =>
+        item._id === image._id ? { ...item, heroTarget } : item,
+      ),
+    );
+
+    const res = await fetch("/api/admin/images", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: image._id, heroTarget }),
+    });
+    if (!res.ok) {
+      setImages((current) =>
+        current.map((item) =>
+          item._id === image._id
+            ? { ...item, heroTarget: image.heroTarget ?? "both" }
+            : item,
+        ),
+      );
+      toast("Unable to update hero screen.", "error");
+      return;
+    }
+
+    const data = (await res.json()) as {
+      image?: { heroTarget?: HeroTarget };
+    };
+    const saved = data.image?.heroTarget ?? heroTarget;
+    setImages((current) =>
+      current.map((item) =>
+        item._id === image._id ? { ...item, heroTarget: saved } : item,
+      ),
+    );
+
+    const label =
+      HERO_TARGET_OPTIONS.find((option) => option.value === saved)?.label ??
+      saved;
+    toast(`Hero image set to ${label}.`, "success");
+  }
+
   async function remove(id: string) {
     const ok = await confirm({
       title: "Delete this image?",
@@ -194,7 +254,10 @@ export default function AdminImagesPage() {
         <h1 className="font-display text-4xl text-charcoal">Images</h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-charcoal-muted md:text-base">
           Upload to Cloudinary, then select which images appear on the site.
-          For Invitations, Creatives, and Work, choose{" "}
+          Hero images use a separate screen: desktop is{" "}
+          <span className="text-charcoal">1920 × 1080 px</span> (16:9), mobile
+          is <span className="text-charcoal">1080 × 1440 px</span> (3:4). For
+          Invitations, Creatives, and Work, choose{" "}
           <span className="text-charcoal">9:16</span> or{" "}
           <span className="text-charcoal">16:9</span> for the bento layout —
           or leave Auto to detect from the file.
@@ -262,6 +325,30 @@ export default function AdminImagesPage() {
               ))}
             </select>
           </label>
+        ) : null}
+
+        {uploadFolder === "hero" ? (
+          <div className="space-y-3 sm:max-w-xs">
+            <p className="text-sm leading-relaxed text-charcoal-muted">
+              {HERO_SIZE_HINT}
+            </p>
+            <label className="block text-sm">
+              <span className="text-charcoal-muted">Show on</span>
+              <select
+                value={uploadHeroTarget}
+                onChange={(e) =>
+                  setUploadHeroTarget(e.target.value as HeroTarget)
+                }
+                className={fieldClass}
+              >
+                {HERO_TARGET_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         ) : null}
 
         <label className="flex items-center gap-2.5 text-sm text-charcoal">
@@ -362,6 +449,36 @@ export default function AdminImagesPage() {
                         </option>
                       ))}
                     </select>
+                  </label>
+                ) : null}
+
+                {image.folder === "hero" ? (
+                  <label className="block text-sm">
+                    <span className="text-charcoal-muted">Show on</span>
+                    <select
+                      value={heroScreenForImage(image)}
+                      onChange={(e) =>
+                        void setHeroTarget(
+                          image,
+                          e.target.value as "desktop" | "mobile",
+                        )
+                      }
+                      className={fieldClass}
+                    >
+                      {HERO_TARGET_OPTIONS.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="mt-1 block text-xs leading-relaxed text-charcoal-muted">
+                      {heroScreenForImage(image) === "mobile"
+                        ? "Upload at 1080 × 1440 px (3:4)."
+                        : "Upload at 1920 × 1080 px (16:9)."}
+                      {image.width && image.height
+                        ? ` This file is ${image.width} × ${image.height} px.`
+                        : ""}
+                    </span>
                   </label>
                 ) : null}
 
